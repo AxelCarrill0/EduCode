@@ -1,3 +1,3 @@
 git add .   
-git commit -m "002_Primer commit"
+git commit -m "002_Vista Inicial Home"
 git push -u origin main

@@ -8,7 +8,8 @@
 
     <div class="header-button">
       <p-button label="Iniciar Sesión" severity="success" [outlined]="true"></p-button>
-      <p-button label="Registrarse" severity="success"></p-button>
+      <p-button label="Registrarse" severity="success"></p-button> <!--botones de primeng ya traen sus estilos de colores
+      y de texto -->
     </div>
 
   </header>
@@ -16,8 +17,10 @@
   <main class="main-content">
 
     <section class="welcome">
-      <h1>¡Hola! Bienvenido a EduCode</h1>
-      <p>En EduCode, aprender a programar es fácil y divertido</p>
+      <div class="welcome-title">
+        <h1>¡Hola! Bienvenido a EduCode</h1>
+        <p>En EduCode, aprender a programar es fácil y divertido</p>
+      </div>
       <div class="welcome-img">
         <p>[ IMAGEN DEL editor de Código Principal ]</p>
       </div>
@@ -29,11 +32,11 @@
         <p>Te ofrecemos las herramientas necesarias para acelerar tu aprendizaje.</p>
       </div>
       <div class="features-content">
-        <div class="feature-item">
+        <p-card> <!-- esto hace como un contenedor visualmente mejor que el div y se tiene que hacer en scss-->
           <div class="feature-content-image">[ IMAGEN ]</div>
           <h3>Consola Interactiva</h3>
           <p>Escribe y ejecuta código en tiempo real sin instalar programas adicionales.</p>
-        </div>
+        </p-card>
         <div class="feature-item">
           <div class="feature-content-image">[ IMAGEN]</div>
           <h3>Validación Inmediata</h3>
@@ -54,7 +57,7 @@
       <div class="footer-section">
         <h3>EduCode</h3>
         <p>Aprende a programar de forma fácil y divertida.</p>
-        <li><a href="#">Inicio</a></li>
+        <li><a href="/">Inicio</a></li>
       </div>
       <div class="footer-section">
         <h3>Síguenos</h3>

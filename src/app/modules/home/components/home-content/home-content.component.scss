@@ -18,7 +18,7 @@
 /* Estilo para el texto "EduCode" */
 .header-logo {
   strong {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: #22c55e;
   }
 }
@@ -27,11 +27,34 @@
 .header-button {
   color: #22c55e;
   font-weight: 500;
+  display: flex;
+  gap: 1rem;
 }
+
+.welcome {
+  border: 1px solid #e2e8f0;
+  padding: 4rem 2rem;
+  border-radius: 8px;
+  background-color: white;
+  margin-top: 2rem;
+}
+
+.welcome-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome-img {
+  width: 50%;
+  height: 50%;
+  border-radius: 8px;
+}
+
 
 .features {
   border: 1px solid #e2e8f0;
-  padding: 1.5rem;
+  padding: 4rem 2rem;
   border-radius: 8px;
   background-color: white;
 }
