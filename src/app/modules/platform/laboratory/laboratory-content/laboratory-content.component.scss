@@ -1,0 +1,66 @@
+.laboratory-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.laboratory-header{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.laboratory-content{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+.editor-section{
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  padding: 1.5rem;
+}
+
+.editor-section textarea{
+  width: 100%;
+  height: 400px;
+
+  margin-top: 1rem;
+
+  resize: none;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 8px;
+
+  padding: 1rem;
+}
+
+.console-section{
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  padding: 1.5rem;
+}
+
+.console-output{
+  margin-top: 1rem;
+
+  background-color: #0f172a;
+
+  color: #f8fafc;
+
+  padding: 1rem;
+
+  border-radius: 8px;
+
+  min-height: 400px;
+}

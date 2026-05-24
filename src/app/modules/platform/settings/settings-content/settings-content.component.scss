@@ -1,0 +1,36 @@
+.settings-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.settings-header{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.settings-card{
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-item{
+  display: flex;
+  justify-content: space-between;
+
+  padding: 1rem 0;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+
