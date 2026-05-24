@@ -4,7 +4,7 @@ import { RegisterContentComponent } from './modules/register/components/register
 import { LoginContentComponent } from './modules/login/components/login-content/login-content.component';
 import { LayoutContentComponent } from './modules/platform/layout/layout-content/layout-content.component';
 import { DashboardContentComponent } from './modules/platform/dashboard/dashboard-content/dashboard-content.component';
-
+import { ModulesContentComponent } from './modules/platform/modules/modules-content/modules-content.component';
 
 export const routes: Routes = [
     { path: '', component: HomeContentComponent },
@@ -13,6 +13,7 @@ export const routes: Routes = [
     { path: 'platform', component: LayoutContentComponent, 
     children: [
         { path: 'dashboard', component: DashboardContentComponent },
+        { path: 'modules', component: ModulesContentComponent },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ] },
     { path: '**', redirectTo: '' }

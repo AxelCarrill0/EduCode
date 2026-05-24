@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { CardModule } from "primeng/card";
+
 
 @Component({
   selector: 'app-layout-content',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterModule, CardModule],
   templateUrl: './layout-content.component.html',
   styleUrl: './layout-content.component.scss'
 })

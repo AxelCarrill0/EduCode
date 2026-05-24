@@ -2,7 +2,6 @@
 
   <p-card header="Crear Cuenta" styleClass="register-card">
 
-    <!-- NOMBRE -->
     <div class="register-field">
 
       <label>Nombre</label>
@@ -10,8 +9,6 @@
       <input type="text" pInputText class="w-full" [(ngModel)]="nombre">
 
     </div>
-
-    <!-- CORREO -->
     <div class="register-field">
 
       <label>Correo</label>
@@ -20,7 +17,6 @@
 
     </div>
 
-    <!-- PASSWORD -->
     <div class="register-field">
 
       <label>Contraseña</label>
@@ -29,7 +25,6 @@
 
     </div>
 
-    <!-- PASSWORD -->
     <div class="register-field">
 
       <label>Confirmar Contraseña</label>
@@ -38,7 +33,6 @@
 
     </div>
 
-    <!-- BOTÓN -->
      <div class="register-button">
         <p-button label="Regresar" routerLink="/" severity="success"></p-button>
         <p-button label="Registrarse" severity="success" (click)="registrar()"></p-button>
