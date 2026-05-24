@@ -1,0 +1,30 @@
+.register-container{
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f8fafc;
+}
+
+.register-card{
+  width: 25rem;
+  border-radius: 16px;
+}
+
+.register-field{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.register-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+
+}

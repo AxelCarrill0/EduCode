@@ -1,0 +1,31 @@
+
+<div class="login-container">
+  <p-card header="Iniciar Sesión" styleClass="login-card">
+
+    <!-- CORREO -->
+    <div class="login-field">
+
+      <label>Correo</label>
+
+      <input type="email" pInputText class="w-full" [(ngModel)]="correo">
+
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="login-field">
+
+      <label>Contraseña</label>
+
+      <p-password [feedback]="false" styleClass="w-full" [(ngModel)]="password"></p-password>
+
+    </div>
+
+    <!-- BOTÓN -->
+    <div class="login-button">
+    <p-button label="Regresar" routerLink="/" severity="success"></p-button>
+    <p-button label="Iniciar Sesión" severity="success" (click)="iniciarSesion()"></p-button>
+    </div>
+
+  </p-card>
+
+</div>
