@@ -11,45 +11,45 @@
     align-items: flex-start;
     padding-top: 2rem;
   }
-}
 
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  border-radius: 18px;
-}
-
-.login-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.login-field {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  margin-bottom: 1rem;
-}
-
-.login-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
-
-  @media (max-width: 480px) {
-    flex-wrap: wrap;
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 18px;
   }
-}
 
-.forgot-password {
-  color: #22c55e;
-  cursor: pointer;
-  font-size: .9rem;
-  text-decoration: none;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: flex-end;
+  .login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-field {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
+
+  .login-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+
+    @media (max-width: 480px) {
+      flex-wrap: wrap;
+    }
+  }
+
+  .forgot-password {
+    color: #22c55e;
+    cursor: pointer;
+    font-size: .9rem;
+    text-decoration: none;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
