@@ -34,3 +34,26 @@
   margin-top: 2rem;
   gap: 1rem;
 }
+
+.forgot-password{
+  color: #22c55e;
+  cursor: pointer;
+  font-size: .9rem;
+  text-decoration: none;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .login-button {
+    flex-wrap: wrap;
+  }
+}

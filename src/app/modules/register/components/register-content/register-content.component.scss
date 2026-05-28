@@ -35,5 +35,17 @@
   align-items: center;
   margin-top: 2rem;
   gap: 1rem;
-
 }
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 480px) {
+  .register-container {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .register-button {
+    flex-wrap: wrap;
+  }
+}

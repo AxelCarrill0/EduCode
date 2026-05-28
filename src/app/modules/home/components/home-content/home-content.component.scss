@@ -125,7 +125,42 @@
   display: flex;
   gap: 1rem;
 }
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 768px) {
 
+  // Header: logo + botones en columna centrada
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 
+  .header-logo strong {
+    font-size: 1.8rem;
+  }
 
+  // Hero: una columna, imagen debajo
+  .welcome {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
+  .welcome-image {
+    order: -1; // imagen arriba en móvil si se desea, o quitar esta línea para que vaya abajo
+  }
+
+  // Características: 1 columna en móvil
+  .features {
+    padding: 2rem 1rem;
+  }
+
+  .features-content {
+    grid-template-columns: 1fr;
+  }
+
+  // Footer: secciones apiladas
+  .footer-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}

@@ -71,3 +71,71 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 768px) {
+
+  // El contenedor pasa a columna
+  .layout-container {
+    flex-direction: column;
+  }
+
+  // Sidebar se convierte en barra de navegación inferior fija
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-top: 1px solid #e2e8f0;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: white;
+
+    h2 { display: none; } // ocultar título en móvil
+
+    ul {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 0.5rem 0;
+      flex: 1;
+      text-align: center;
+    }
+
+    a {
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.7rem;
+      justify-content: center;
+
+      i { font-size: 1.1rem; }
+    }
+  }
+
+  // El contenido ocupa todo el ancho y deja espacio para la barra inferior
+  .content {
+    padding-bottom: 70px;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+
+    h3 { font-size: 0.95rem; }
+  }
+
+  .topbar-button {
+    gap: 0.5rem;
+  }
+
+  .page-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
