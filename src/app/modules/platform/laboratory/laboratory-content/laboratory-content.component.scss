@@ -2,23 +2,41 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
 }
 
 .laboratory-header{
   display: flex;
   flex-direction: column;
   gap: .5rem;
+
+  @media (max-width: 768px) {
+    gap: .25rem;
+  }
 }
 
 .execute-button{
   align-self: flex-end;
   justify-self: flex-end;
+
+  @media (max-width: 768px) {
+    align-self: stretch;
+    justify-self: stretch;
+  }
 }
 
 .laboratory-content{
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 .editor-section{
@@ -26,6 +44,10 @@
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .editor-section textarea{
@@ -36,6 +58,11 @@
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   padding: 1rem;
+
+  @media (max-width: 768px) {
+    height: 260px;
+    padding: .75rem;
+  }
 }
 
 .console-section{
@@ -43,6 +70,10 @@
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .console-output{
@@ -52,4 +83,9 @@
   padding: 1rem;
   border-radius: 8px;
   min-height: 400px;
+
+  @media (max-width: 768px) {
+    min-height: 220px;
+    padding: .75rem;
+  }
 }
