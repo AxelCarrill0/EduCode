@@ -44,6 +44,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
+  background-color: #E6ECE0;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -67,7 +68,7 @@
   border: 1px solid #e2e8f0;
   padding: 4rem 2rem;
   border-radius: 8px;
-  background-color: white;
+  background-color: #E6ECE0;
 
   @media (max-width: 768px) {
     padding: 2rem 1rem;
@@ -94,13 +95,12 @@
     justify-content: center;
     align-items: center;
     padding-top: 2rem;
-    color: #22c55e;
   }
 }
 
 //pie de página
 .footer {
-  background-color: #f8fafc;
+  background-color: #E6ECE0;
   border-top: 1px solid #e2e8f0;
   margin-top: 3rem;
   padding: 2rem 0;
