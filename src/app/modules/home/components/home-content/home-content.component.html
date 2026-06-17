@@ -1,82 +1,208 @@
 <div class="home-container">
+  <!-- Header Glassmórfico Sticky -->
   <header class="header">
-    <div class="header-logo"><strong>EduCode</strong></div>
+    <div class="header-logo" routerLink="/">
+      <span class="logo-accent">Edu</span>Code
+    </div>
 
     <div class="header-button">
-      <p-button label="Iniciar Sesión" routerLink="/login" severity="success" [outlined]="true"></p-button>
-      <p-button label="Registrarse" routerLink="/register" severity="success"></p-button>
+      <p-button label="Iniciar Sesión" routerLink="/login" severity="success" [outlined]="true" styleClass="nav-btn-outline"></p-button>
+      <p-button label="Registrarse" routerLink="/register" severity="success" styleClass="nav-btn-solid"></p-button>
     </div>
   </header>
 
   <main class="main-content">
-    <p-card>
-      <section class="welcome">
-        <div class="welcome-info">
-          <p-tag value="Plataforma Educativa" severity="success"></p-tag>
-          <h1>Aprende programación de forma práctica</h1>
-          <p>
-            EduCode te permite aprender mediante ejercicios interactivos, rutas
-            guiadas y laboratorios prácticos.
+    <!-- Hero Section con Mockup de Navegador y Tarjetas Flotantes -->
+    <section class="welcome">
+      <div class="welcome-info">
+        <div class="new-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-text">Plataforma Educativa para Desarrolladores</span>
+        </div>
+        <h1>Aprende programación de forma <span class="gradient-text">práctica</span></h1>
+        <p class="hero-description">
+          EduCode te ayuda a dominar el desarrollo de software mediante ejercicios interactivos, rutas de aprendizaje estructuradas y laboratorios prácticos con feedback inmediato.
+        </p>
+        <div class="hero-actions">
+          <p-button label="Comienza a aprender hoy" icon="pi pi-rocket" iconPos="right" severity="success" routerLink="/login" styleClass="hero-cta"></p-button>
+          <a href="#features" class="learn-more-link">Saber más <i class="pi pi-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Lado Derecho: Browser Showcase Mockup con Tarjetas Flotantes en CSS -->
+      <div class="welcome-showcase">
+        <div class="showcase-glow"></div>
+        <div class="browser-mockup">
+          <div class="browser-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="browser-address">
+              <i class="pi pi-lock"></i> educode.org/workspace
+            </div>
+          </div>
+          <div class="browser-body">
+            <img src="assets/img_editor.png" alt="EduCode Workspace" class="showcase-img">
+          </div>
+        </div>
+
+        <!-- Tarjetas Decorativas Flotantes (Retroalimentación Visual) -->
+        <div class="floating-card progress-card animate-float-delay">
+          <div class="card-icon"><i class="pi pi-chart-line"></i></div>
+          <div class="card-details">
+            <span class="card-title">Introducción a Python</span>
+            <div class="progress-bar-container">
+              <div class="progress-fill" style="width: 78%;"></div>
+            </div>
+            <span class="card-meta">78% Completado</span>
+          </div>
+        </div>
+
+        <div class="floating-card badge-card animate-float">
+          <div class="card-icon-badge"><i class="pi pi-star-fill"></i></div>
+          <div class="card-details">
+            <span class="badge-number">+150 XP</span>
+            <span class="badge-label">Desafío Diario Listo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Características (Por qué aprender) - Diseño Split Asimétrico -->
+    <section id="features" class="features-split-section">
+      <div class="features-split-grid">
+        <div class="features-left-sticky">
+          <div class="split-tag"><i class="pi pi-compass"></i> Ventajas de EduCode</div>
+          <h2>¿Por qué aprender con nuestra plataforma?</h2>
+          <p class="features-split-desc">
+            Diseñamos cada herramienta pensando en facilitar tu transición desde la teoría abstracta hasta la escritura de código real y listo para producción.
           </p>
-          <p-button label="Comienza tu aprendizaje hoy" severity="success" routerLink="/login"></p-button>
         </div>
-
-        <div class="welcome-image"><img src="assets/img_editor.png" alt="EduCode"></div>
-      </section>
-    </p-card>
-
-    <p-divider></p-divider>
-
-    <p-card>
-      <section class="features">
-        <div class="features-title">
-          <h2>¿Por qué aprender con EduCode?</h2>
-          <p>Tres razones para elegir nuestra plataforma</p>
-        </div>
-
-        <div class="features-content">
-          <p-card>
-            <div class="feature-icon"><i class="pi pi-code"></i></div>
-            <h3>Consola Interactiva</h3>
-            <p>
-              Ejecuta código en tiempo real directamente desde la plataforma.
-            </p>
-          </p-card>
-          <p-card>
-            <div class="feature-icon"><i class="pi pi-check-circle"></i></div>
-            <h3>Validación Automática</h3>
-            <p>
-              Obtén feedback instantáneo y corrige errores al momento de
-              escribir.
-            </p>
-          </p-card>
-          <p-card>
-            <div class="feature-icon"><i class="pi pi-sitemap"></i></div>
-            <h3>Rutas Guiadas</h3>
-            <p>Aprende paso a paso desde nivel básico hasta avanzado.</p>
+        <div class="features-right-cards">
+          <p-card *ngFor="let item of features" styleClass="feature-premium-card">
+            <div class="feature-card-header">
+              <div class="feature-icon-circle" [ngClass]="item.colorClass">
+                <i [class]="item.icon"></i>
+              </div>
+              <h3>{{ item.title }}</h3>
+            </div>
+            <p class="feature-card-body">{{ item.description }}</p>
           </p-card>
         </div>
-      </section>
-    </p-card>
+      </div>
+    </section>
+
+    <!-- Cómo Funciona - Línea de tiempo alternada de PrimeNG -->
+    <section class="how-it-works-timeline-section">
+      <div class="section-title">
+        <h2>Cómo Funciona EduCode</h2>
+        <p>Aprende de manera interactiva siguiendo nuestra metodología probada paso a paso.</p>
+      </div>
+
+      <div class="timeline-wrapper">
+        <p-timeline [value]="steps" align="alternate" styleClass="custom-timeline">
+          <ng-template pTemplate="marker" let-step>
+            <div class="timeline-step-marker">
+              <i [class]="step.icon"></i>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="content" let-step>
+            <p-card styleClass="timeline-step-card">
+              <div class="step-card-header">
+                <span class="step-badge">{{ step.num }}</span>
+                <h3>{{ step.title }}</h3>
+              </div>
+              <p>{{ step.description }}</p>
+            </p-card>
+          </ng-template>
+        </p-timeline>
+      </div>
+    </section>
+
+    <!-- Opiniones de Estudiantes - Carrusel Interactivo de PrimeNG -->
+    <section class="testimonials-carousel-section">
+      <div class="section-title">
+        <h2>Opiniones de Estudiantes</h2>
+        <p>Descubre cómo miles de alumnos están transformando sus habilidades y logrando sus metas.</p>
+      </div>
+
+      <div class="carousel-wrapper">
+        <p-carousel [value]="testimonials" [numVisible]="2" [numScroll]="1" [circular]="true" [responsiveOptions]="carouselResponsiveOptions" styleClass="custom-testimonials-carousel">
+          <ng-template let-t pTemplate="item">
+            <div class="testimonial-slide">
+              <div class="testimonial-slide-inner">
+                <div class="stars-rating">
+                  <i class="pi pi-star-fill" *ngFor="let star of [1, 2, 3, 4, 5]"></i>
+                </div>
+                <p class="testimonial-text">"{{ t.text }}"</p>
+                <div class="testimonial-user">
+                  <img [src]="t.avatar" [alt]="t.name" class="user-avatar">
+                  <div class="user-details">
+                    <h4>{{ t.name }}</h4>
+                    <span>{{ t.role }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </section>
+
+    <!-- Preguntas Frecuentes - Acordeón Nativo de PrimeNG -->
+    <section class="faq-accordion-section">
+      <div class="section-title">
+        <h2>Preguntas Frecuentes</h2>
+        <p>Resuelve tus dudas generales y comienza hoy mismo tu formación.</p>
+      </div>
+
+      <div class="accordion-wrapper">
+        <p-accordion [multiple]="true" styleClass="custom-accordion">
+          <p-accordionTab *ngFor="let faq of faqs" [header]="faq.question">
+            <p class="faq-answer-text">{{ faq.answer }}</p>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </section>
+
+
   </main>
 
-  <p-divider></p-divider>
-
+  <!-- Footer Moderno -->
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-section">
-        <h3>EduCode</h3>
-        <p>Aprende a programar de forma fácil y divertida.</p>
-        <li>
-          <a routerLink="/" (click)="scrollToTop()"><i class="pi pi-home"></i>Inicio</a>
-        </li>
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-accent">Edu</span>Code
+        </div>
+        <p>Aprende a programar de forma fácil, divertida y práctica.</p>
+        <span class="copyright">© 2026 EduCode. Todos los derechos reservados.</span>
       </div>
-      <div class="footer-section">
+
+      <div class="footer-links">
+        <h3>Navegación</h3>
+        <ul>
+          <li>
+            <a routerLink="/" (click)="scrollToTop()"><i class="pi pi-home"></i> Inicio</a>
+          </li>
+          <li>
+            <a routerLink="/login"><i class="pi pi-sign-in"></i> Iniciar Sesión</a>
+          </li>
+          <li>
+            <a routerLink="/register"><i class="pi pi-user-plus"></i> Registrarse</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
         <h3>Redes Sociales</h3>
+        <p>Síguenos para estar al día con nuevos desafíos.</p>
         <div class="social-icons">
-          <i class="pi pi-facebook"></i>
-          <i class="pi pi-instagram"></i>
-          <i class="pi pi-twitter"></i>
+          <a class="social-icon" aria-label="Facebook"><i class="pi pi-facebook"></i></a>
+          <a class="social-icon" aria-label="Instagram"><i class="pi pi-instagram"></i></a>
+          <a class="social-icon" aria-label="Twitter"><i class="pi pi-twitter"></i></a>
         </div>
       </div>
     </div>

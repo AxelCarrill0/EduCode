@@ -1,46 +1,440 @@
-.register-container {
-  min-height: 100vh;
+$color-emerald: #10b981;
+$color-emerald-hover: #059669;
+$color-teal: #0d9488;
+$color-cyan: #06b6d4;
+$color-slate-900: #0f172a;
+$color-slate-800: #1e293b;
+$color-slate-700: #334155;
+$color-slate-600: #475569;
+$color-slate-500: #64748b;
+$color-slate-400: #94a3b8;
+$color-slate-300: #cbd5e1;
+$color-slate-200: #e2e8f0;
+$color-slate-100: #f1f5f9;
+$color-slate-50: #f8fafc;
+
+.register-page {
   display: flex;
-  justify-content: center;
+  min-height: 100vh;
+  background-color: $color-slate-50;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+// ===== PANEL IZQUIERDO - Ilustración / Journey =====
+.register-illustration-panel {
+  flex: 1;
+  background: linear-gradient(160deg, #022c22 0%, #065f46 30%, #0d9488 70%, #0e7490 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
   align-items: center;
-  background-color: #f8fafc;
+  justify-content: center;
+  padding: 3rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+
+  .brand-logo {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    .logo-accent {
+      color: #6ee7b7;
+    }
+  }
+}
+
+.illustration-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-tagline {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-weight: 400;
+}
+
+// ===== PANEL DERECHO =====
+.register-form-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1.5rem;
+  background:
+    radial-gradient(circle at 100% 30%, rgba(16, 185, 129, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 0% 70%, rgba(6, 182, 212, 0.02) 0%, transparent 50%);
+
+  @media (max-width: 900px) {
+    padding: 1.5rem;
+    justify-content: flex-start;
+    padding-top: 2.5rem;
+  }
+}
+
+// Form card with accent top bar
+.form-card {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+}
+
+.form-card-accent {
+  height: 4px;
+  background: linear-gradient(90deg, $color-emerald, $color-teal, $color-cyan);
+}
+
+.form-card-body {
+  padding: 2.2rem 2rem;
 
   @media (max-width: 480px) {
-    padding: 1rem;
-    align-items: flex-start;
-    padding-top: 2rem;
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: $color-slate-900;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.03em;
   }
 
-  .register-card {
-    width: 100%;
-    max-width: 420px;
-    border-radius: 18px;
+  p {
+    font-size: 1rem;
+    color: $color-slate-500;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// Social login - labeled buttons
+.social-login-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
   }
 
-  .register-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .5rem;
-    margin-bottom: 1rem;
-  }
+  ::ng-deep .social-btn-labeled {
+    .p-button {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.7rem 0.5rem;
+      border-radius: 12px;
+      border: 1px solid $color-slate-200;
+      background: white;
+      color: $color-slate-700;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
 
-  .register-field {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    margin-bottom: 1rem;
-  }
+      &:hover {
+        border-color: $color-emerald;
+        color: $color-emerald;
+        background: rgba(16, 185, 129, 0.03);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+      }
 
-  .register-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-    gap: 1rem;
-
-    @media (max-width: 480px) {
-      flex-wrap: wrap;
+      i {
+        font-size: 1.1rem;
+      }
     }
+  }
+}
+
+::ng-deep .p-divider {
+  &.p-divider-horizontal {
+    margin: 1rem 0;
+
+    .p-divider-content {
+      background: white;
+      padding: 0 1rem;
+    }
+  }
+
+  .divider-text {
+    font-size: 0.8rem;
+    color: $color-slate-400;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+// Form groups
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color-slate-700;
+  }
+
+  ::ng-deep input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    border: 1.5px solid $color-slate-200;
+    border-radius: 10px;
+    background: $color-slate-50;
+    color: $color-slate-900;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: $color-slate-400;
+      font-weight: 400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-emerald;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
+    }
+
+    &.ng-invalid.ng-dirty {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+    }
+  }
+
+  ::ng-deep .p-password {
+    width: 100%;
+
+    input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border: 1.5px solid $color-slate-200;
+      border-radius: 10px;
+      background: $color-slate-50;
+      color: $color-slate-900;
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: $color-slate-400;
+        font-weight: 400;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $color-emerald;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
+      }
+    }
+
+    .p-password-toggle-icon {
+      color: $color-slate-400;
+      transition: color 0.2s;
+    }
+
+    .p-password-meter {
+      border-radius: 0 0 10px 10px;
+    }
+  }
+}
+
+// Terms checkbox
+.form-options {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0.25rem 0 1rem;
+
+  ::ng-deep .p-checkbox {
+    margin-top: 2px;
+
+    .p-checkbox-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 2px solid $color-slate-300;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+
+      &.p-highlight {
+        border-color: $color-emerald;
+        background: $color-emerald;
+      }
+
+      &:not(.p-highlight):hover {
+        border-color: $color-emerald;
+      }
+    }
+
+    .p-checkbox-icon {
+      font-size: 0.65rem;
+    }
+  }
+
+  .terms-label {
+    font-size: 0.9rem;
+    color: $color-slate-600;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.5;
+
+    .terms-link {
+      color: $color-emerald;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $color-emerald-hover;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Submit button
+::ng-deep .register-submit-btn {
+  display: block;
+  margin-bottom: 1rem;
+
+  .p-button {
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.95rem 1.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, $color-emerald, $color-teal);
+    border: none;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2);
+    color: white;
+    transition: all 0.3s ease;
+    justify-content: center;
+
+    &:hover {
+      background: linear-gradient(135deg, $color-emerald-hover, $color-teal);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.3);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Login section
+.login-section {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+
+  span {
+    font-size: 0.88rem;
+    color: $color-slate-500;
+  }
+
+  a {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $color-emerald;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-emerald-hover;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Back link
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $color-slate-400;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-emerald;
+  }
+
+  i {
+    font-size: 0.8rem;
   }
 }

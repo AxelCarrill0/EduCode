@@ -1,51 +1,141 @@
-<div class="dashboard-container">
+<div class="dashboard">
 
-  <div class="dashboard-header">
-    <div>
-      <h1>Bienvenido, Usuario</h1>
-      <p>Observa tus estadisticas y progreso.</p>
+  <div class="welcome-banner">
+    <div class="welcome-text">
+      <h1>¡Bienvenido de nuevo, {{ userStats.name }}!</h1>
+      <p class="welcome-subtitle">Has completado el {{ userStats.levelProgress }}% de tu ruta de aprendizaje</p>
     </div>
-    <p-tag value="Nivel Básico" severity="success"></p-tag>
+    <div class="welcome-actions">
+      <p-tag [value]="'Nivel ' + userStats.level" severity="success" styleClass="level-tag"></p-tag>
+      <p-avatar label="U" shape="circle" size="large" styleClass="user-avatar"></p-avatar>
+    </div>
   </div>
 
-  <div class="content">
-
-    <section class="dashboard-content">
-      <p-card>
-        <div class="card-content">
-          <i class="pi pi-book"></i>
-          <h1>7</h1>
-          <p>Módulos disponibles</p>
-
+  <div class="stats-grid">
+    <p-card styleClass="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-icon bg-emerald"><i class="pi pi-book"></i></div>
+        <div class="stat-info">
+          <span class="stat-value">{{ userStats.modulesCompleted }}/{{ userStats.totalModules }}</span>
+          <span class="stat-label">Módulos completados</span>
         </div>
-      </p-card>
-
-      <p-card>
-        <div class="card-content">
-          <i class="pi pi-check-circle"></i>
-          <h1>6/17</h1>
-          <p>Lecciones completadas</p>
-        </div>
-      </p-card>
-
-      <p-card>
-        <div class="card-content">
-          <i class="pi pi-bolt"></i>
-          <h1>5 días</h1>
-          <p>Racha actual</p>
-        </div>
-      </p-card>
-    </section>
-
-    <p-card>
-      <h2>Tu progreso general</h2>
-      <p-progressBar [value]="35"></p-progressBar>
-      <div class="progress-button">
-        <p-button label="Continúa tu aprendizaje" routerLink="/platform/modules" severity="success"></p-button>
       </div>
     </p-card>
 
+    <p-card styleClass="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-icon bg-cyan"><i class="pi pi-check-circle"></i></div>
+        <div class="stat-info">
+          <span class="stat-value">{{ userStats.lessonsCompleted }}/{{ userStats.totalLessons }}</span>
+          <span class="stat-label">Lecciones completadas</span>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card styleClass="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-icon bg-amber"><i class="pi pi-bolt"></i></div>
+        <div class="stat-info">
+          <span class="stat-value">{{ userStats.streak }} días</span>
+          <span class="stat-label">Racha actual</span>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card styleClass="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-icon bg-purple"><i class="pi pi-star"></i></div>
+        <div class="stat-info">
+          <span class="stat-value">{{ userStats.xp }} XP</span>
+          <span class="stat-label">Puntos totales</span>
+        </div>
+      </div>
+    </p-card>
   </div>
 
+  <div class="dashboard-grid">
+    <div class="grid-main">
+      <p-panel styleClass="progress-panel" header="Progreso General">
+        <div class="progress-panel-body">
+          <div class="progress-doughnut">
+            <p-chart type="doughnut" [data]="progressChartData" [options]="progressChartOptions" height="140px" width="140px"></p-chart>
+          </div>
+          <div class="progress-details">
+            <div class="progress-detail-row">
+              <span class="detail-dot completed"></span>
+              <span>Completado</span>
+              <strong>{{ userStats.lessonsCompleted }} lecciones</strong>
+            </div>
+            <div class="progress-detail-row">
+              <span class="detail-dot in-progress"></span>
+              <span>En progreso</span>
+              <strong>{{ userStats.inProgressLessons }} lecciones</strong>
+            </div>
+            <div class="progress-detail-row">
+              <span class="detail-dot pending"></span>
+              <span>Pendiente</span>
+              <strong>{{ userStats.pendingLessons }} lecciones</strong>
+            </div>
+            <div class="progress-cta">
+              <p-button label="Continuar aprendizaje" icon="pi pi-arrow-right" iconPos="right" severity="success" routerLink="/platform/modules"></p-button>
+            </div>
+          </div>
+        </div>
+      </p-panel>
+
+      <p-panel styleClass="quick-modules-panel" header="Continúa tu aprendizaje">
+        <div class="quick-modules-grid">
+          <p-card *ngFor="let mod of recentModules" styleClass="quick-module-card">
+            <div class="quick-module-header">
+              <i [class]="mod.icon"></i>
+              <h3>{{ mod.name }}</h3>
+            </div>
+            <p-progressBar [value]="mod.progress" styleClass="module-progress"></p-progressBar>
+            <div class="quick-module-footer">
+              <span class="module-lessons">{{ mod.lessons }}</span>
+              <p-button label="Continuar" severity="success" [text]="true" [raised]="false" routerLink="/platform/modules"></p-button>
+            </div>
+          </p-card>
+        </div>
+      </p-panel>
+    </div>
+
+    <div class="grid-side">
+      <p-panel styleClass="activity-panel" header="Actividad Reciente">
+        <p-timeline [value]="activities" styleClass="custom-timeline-dashboard">
+          <ng-template pTemplate="marker" let-event>
+            <div class="activity-marker" [ngClass]="event.status">
+              <i [class]="event.icon"></i>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="content" let-event>
+            <div class="activity-item">
+              <span class="activity-title">{{ event.title }}</span>
+              <p class="activity-desc">{{ event.description }}</p>
+              <span class="activity-date">{{ event.date }}</span>
+            </div>
+          </ng-template>
+        </p-timeline>
+      </p-panel>
+
+      <p-card styleClass="achievements-card">
+        <div class="achievements-header">
+          <i class="pi pi-trophy"></i>
+          <h3>Logros</h3>
+        </div>
+        <div class="achievements-list">
+          <div class="achievement-item" *ngFor="let ach of achievements">
+            <div class="achievement-icon" [ngClass]="ach.earned ? 'earned' : 'locked'">
+              <i [class]="ach.icon"></i>
+            </div>
+            <div class="achievement-info">
+              <span class="achievement-name">{{ ach.name }}</span>
+              <p-tag [value]="ach.earned ? 'Obtenido' : 'Bloqueado'" [severity]="ach.earned ? 'success' : 'secondary'"></p-tag>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
 
 </div>

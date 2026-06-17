@@ -1,48 +1,108 @@
-<div class="login-container">
-  <p-card styleClass="login-card">
+<div class="login-page">
+  <div class="login-brand-panel">
+    <div class="brand-content">
+      <div class="brand-logo" routerLink="/">
+        <span class="logo-accent">Edu</span>Code
+      </div>
+      <div class="brand-welcome">
+        <h1>¡Bienvenido de nuevo!</h1>
+        <p class="brand-subtitle">Ingresa a tu cuenta y continúa expandiendo tus conocimientos en programación.</p>
+      </div>
 
-    <div class="login-header">
-      <i class="pi pi-user"></i>
-      <h2>Iniciar Sesión</h2>
-      <p>Accede a tu cuenta para continuar</p>
+      <div class="brand-highlights">
+        <div class="highlight-item">
+          <i class="pi pi-check-circle"></i>
+          <span>Más de 50 ejercicios prácticos</span>
+        </div>
+        <div class="highlight-item">
+          <i class="pi pi-check-circle"></i>
+          <span>3 lenguajes de programación</span>
+        </div>
+        <div class="highlight-item">
+          <i class="pi pi-check-circle"></i>
+          <span>Retroalimentación inmediata</span>
+        </div>
+      </div>
+
+      <div class="brand-testimonial">
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <p>"La mejor plataforma para aprender a programar desde cero"</p>
+        <span class="testimonial-author">— Sofía M., Estudiante</span>
+      </div>
     </div>
-
-    <div class="login-field">
-      <label>Correo</label>
-
-      <span class="p-input-icon-left w-full">
-      <i class="pi pi-envelope"></i>
-
-      <input
-      type="email"
-      pInputText
-      class="w-full"
-      placeholder="ejemplo@correo.com"
-      [(ngModel)]="correo">
-      </span>
-
+    <div class="brand-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
     </div>
+  </div>
 
-    <div class="login-field">
-      <label>Contraseña</label>
-      <p-password [feedback]="false" [toggleMask]="true" styleClass="w-full" [(ngModel)]="password"></p-password>
+  <div class="login-form-panel">
+    <div class="form-container">
+      <div class="form-header">
+        <div class="form-header-icon">
+          <i class="pi pi-shield"></i>
+        </div>
+        <h2>Iniciar Sesión</h2>
+        <p>Accede con tu cuenta para continuar aprendiendo</p>
+      </div>
 
+
+
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-envelope"></i>
+          <input
+            id="email"
+            type="email"
+            pInputText
+            class="w-full"
+            placeholder="tu@correo.com"
+            [(ngModel)]="correo">
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <p-password
+          id="password"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          [(ngModel)]="password"
+          placeholder="Ingresa tu contraseña">
+        </p-password>
+      </div>
+
+      <div class="form-options">
+        <p-checkbox [(ngModel)]="rememberMe" [binary]="true" inputId="remember-me"></p-checkbox>
+        <label for="remember-me" class="remember-label">Recordar mi sesión</label>
+        <a class="forgot-link">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <p-button
+        label="Iniciar Sesión"
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        styleClass="login-submit-btn"
+        severity="success"
+        (click)="iniciarSesion()">
+      </p-button>
+
+      <div class="register-section">
+        <span>¿No tienes una cuenta?</span>
+        <a routerLink="/register">Crear cuenta ahora</a>
+      </div>
+
+      <a routerLink="/" class="back-link">
+        <i class="pi pi-arrow-left"></i> Volver al inicio
+      </a>
     </div>
-
-    <div class="remember-me">
-      <input type="checkbox">
-      <label>Recordarme</label>
-    </div>
-
-    <div class="login-button">
-      <p-button label="Regresar" routerLink="/" severity="success" [outlined]="true"></p-button>
-      <p-button label="Iniciar Sesión" styleClass="w-full" severity="success" (click)="iniciarSesion()"></p-button>
-    </div>
-    <a class="forgot-password">¿Olvidaste tu contraseña?</a>
-    <p class="register-link">
-      ¿No tienes cuenta?
-    <a routerLink="/register">Regístrate</a>
-    </p>
-  </p-card>
-
+  </div>
 </div>

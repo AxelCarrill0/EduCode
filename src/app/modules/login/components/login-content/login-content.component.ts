@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card'; 
-import { ButtonModule } from 'primeng/button'; 
+import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterModule } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-login-content',
@@ -16,37 +16,29 @@ import { PasswordModule } from 'primeng/password';
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    CardModule,
+    CheckboxModule,
     RouterModule
   ],
   templateUrl: './login-content.component.html',
   styleUrl: './login-content.component.scss'
 })
 export class LoginContentComponent {
-  //variables para guardar datos del formulario de registro
   correo: string = '';
   password: string = '';
+  rememberMe: boolean = false;
 
   constructor(private router: Router) {}
-  //metodo para registrar usuario  y verificar de que todos los campos esten llenos
-  iniciarSesion(){
 
-  if(
-    this.correo === '' ||
-    this.password === ''
-  ){
+  iniciarSesion() {
+    if (this.correo === '' || this.password === '') {
+      alert('Todos los campos son obligatorios');
+      return;
+    }
 
-    alert('Todos los campos son obligatorios');
-    return;
+    console.log(this.correo);
+    console.log(this.password);
+
+    alert('Usuario logueado correctamente');
+    this.router.navigate(['/platform/']);
   }
-
-  // mostrar datos
-  console.log(this.correo);
-  console.log(this.password);
-
-  alert('Usuario logueado correctamente');
-  this.router.navigate(['/platform/']);
-}
-  
-
 }

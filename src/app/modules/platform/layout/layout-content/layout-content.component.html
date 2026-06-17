@@ -1,50 +1,61 @@
-<div class="layout-container">
+<div class="layout-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header" routerLink="/">
+      <span class="sidebar-logo"><span class="logo-accent">Edu</span>Code</span>
+    </div>
 
-  <div class="sidebar">
-    <h2>EduCode</h2>
-    <ul>
-      <li><a routerLink="/platform/dashboard" routerLinkActive="active-link"><i class="pi pi-home"></i>
-          Dashboard</a></li>
-      <li><a routerLink="/platform/modules" routerLinkActive="active-link"><i class="pi pi-book"></i>
-          Módulos</a></li>
-      <li><a routerLink="/platform/laboratory" routerLinkActive="active-link"><i class="pi pi-code"></i>
-          Laboratorio</a></li>
-      <li><a routerLink="/platform/progress" routerLinkActive="active-link"><i class="pi pi-chart-bar"></i>
-          Progreso</a></li>
-      <li><a routerLink="/platform/settings" routerLinkActive="active-link"><i class="pi pi-cog"></i>
-          Ajustes</a></li>
+    <nav class="sidebar-nav">
+      <a routerLink="/platform/dashboard" routerLinkActive="nav-active" class="nav-item">
+        <i class="pi pi-home"></i>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/platform/modules" routerLinkActive="nav-active" class="nav-item">
+        <i class="pi pi-book"></i>
+        <span>Módulos</span>
+      </a>
+      <a routerLink="/platform/laboratory" routerLinkActive="nav-active" class="nav-item">
+        <i class="pi pi-code"></i>
+        <span>Laboratorio</span>
+      </a>
+      <a routerLink="/platform/progress" routerLinkActive="nav-active" class="nav-item">
+        <i class="pi pi-chart-bar"></i>
+        <span>Progreso</span>
+      </a>
+      <a routerLink="/platform/settings" routerLinkActive="nav-active" class="nav-item">
+        <i class="pi pi-cog"></i>
+        <span>Ajustes</span>
+      </a>
+    </nav>
 
-    </ul>
+    <div class="sidebar-footer">
+      <div class="sidebar-user-info">
+        <span class="sidebar-username">Usuario</span>
+        <p-tag value="Nivel Básico" severity="success" styleClass="sidebar-level-tag"></p-tag>
+      </div>
+    </div>
+  </aside>
 
-  </div>
-
-  <div class="content">
-
-    <div class="topbar-content">
-      <p-tag value="Plataforma Educativa" severity="success"></p-tag>
-      <div class="topbar-content">
-        <div class="topbar-button">
-          <p-avatar
-            label="A"
-            shape="circle"
-            size="large">
-          </p-avatar>
-
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-left">
+        <i class="pi pi-circle-fill status-dot"></i>
+        <span class="topbar-title">Plataforma Educativa</span>
+      </div>
+      <div class="topbar-right">
         <p-button
           label="Cerrar Sesión"
-          routerLink="/"
           icon="pi pi-sign-out"
           severity="success"
-          [outlined]="true">
+          [outlined]="true"
+          styleClass="logout-btn"
+          routerLink="/">
         </p-button>
-        </div>
-    </div>
-    </div>
+        <p-avatar label="U" shape="circle" size="large" styleClass="topbar-avatar"></p-avatar>
+      </div>
+    </header>
 
-    <div class="page-content">
+    <main class="page-content">
       <router-outlet></router-outlet>
-    </div>
-
+    </main>
   </div>
-
 </div>
