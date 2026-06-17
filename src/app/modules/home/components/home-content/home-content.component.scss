@@ -247,193 +247,22 @@ $color-border: rgba(226, 232, 240, 0.8);
     }
   }
 
-  // WELCOME SHOWCASE (DEVICE + FLOATING CARDS)
-  .welcome-showcase {
-    position: relative;
+  .welcome-image {
     width: 100%;
     max-width: 500px;
     justify-self: center;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
     @media (max-width: 1024px) {
       margin-top: 2rem;
-    }
-
-    .showcase-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 110%;
-      height: 110%;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.03) 50%, transparent 70%);
-      filter: blur(40px);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .browser-mockup {
-      position: relative;
-      z-index: 1;
-      border-radius: 16px;
-      background: $color-slate-900;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
-      overflow: hidden;
-
-      .browser-header {
-        background: #0b0f19;
-        padding: 0.75rem 1rem;
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-        .window-dots {
-          display: flex;
-          gap: 0.4rem;
-          margin-right: 1.5rem;
-
-          .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-
-            &-red { background-color: #ef4444; }
-            &-yellow { background-color: #f59e0b; }
-            &-green { background-color: #10b981; }
-          }
-        }
-
-        .browser-address {
-          background: rgba(255, 255, 255, 0.05);
-          color: $color-slate-500;
-          font-size: 0.75rem;
-          padding: 0.25rem 1.5rem;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-          width: 100%;
-          max-width: 250px;
-          
-          i { font-size: 0.7rem; }
-        }
-      }
-
-      .browser-body {
-        position: relative;
-        background: #0f172a;
-        height: 280px;
-
-        .showcase-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: top center;
-        }
-      }
-    }
-
-    // TARJETAS FLOTANTES
-    .floating-card {
-      position: absolute;
-      z-index: 5;
-      @include glassmorphism;
-      padding: 0.8rem 1.2rem;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      text-align: left;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
-
-      .card-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        background: rgba(16, 185, 129, 0.1);
-        color: $color-emerald;
-        @include flex-center;
-        font-size: 1.1rem;
-      }
-
-      .card-details {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-
-        .card-title {
-          font-weight: 700;
-          font-size: 0.85rem;
-          color: $color-slate-900;
-        }
-
-        .card-meta {
-          font-size: 0.75rem;
-          font-weight: 600;
-          color: $color-slate-500;
-        }
-
-        .progress-bar-container {
-          width: 110px;
-          height: 6px;
-          background: rgba(0, 0, 0, 0.06);
-          border-radius: 10px;
-          overflow: hidden;
-          margin: 0.1rem 0;
-
-          .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, $color-emerald, $color-cyan);
-            border-radius: 10px;
-          }
-        }
-      }
-
-      &.progress-card {
-        bottom: -20px;
-        left: -30px;
-
-        @media (max-width: 600px) {
-          left: 10px;
-          bottom: -25px;
-        }
-      }
-
-      &.badge-card {
-        top: 35px;
-        right: -25px;
-
-        @media (max-width: 600px) {
-          right: 10px;
-          top: -25px;
-        }
-
-        .card-icon-badge {
-          width: 38px;
-          height: 38px;
-          border-radius: 50%;
-          background: rgba(245, 158, 11, 0.1);
-          color: #f59e0b;
-          @include flex-center;
-          font-size: 1.1rem;
-          box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3);
-          animation: pulse-gold 2s infinite;
-        }
-
-        .badge-number {
-          font-weight: 800;
-          font-size: 1rem;
-          color: #d97706;
-          line-height: 1;
-        }
-
-        .badge-label {
-          font-size: 0.75rem;
-          font-weight: 600;
-          color: $color-slate-500;
-        }
-      }
     }
   }
 }
@@ -1014,35 +843,8 @@ $color-border: rgba(226, 232, 240, 0.8);
   }
 }
 
-// KEYFRAMES
-@keyframes float-y {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
-@keyframes float-y-alt {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(6px); }
-  100% { transform: translateY(0px); }
-}
-
 @keyframes pulse-badge {
   0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
   70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
   100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
-
-@keyframes pulse-gold {
-  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
-  70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
-}
-
-.animate-float {
-  animation: float-y 5s ease-in-out infinite;
-}
-
-.animate-float-delay {
-  animation: float-y-alt 5.5s ease-in-out infinite;
 }
