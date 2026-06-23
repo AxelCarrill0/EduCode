@@ -26,19 +26,20 @@ export class LoginContentComponent {
   correo: string = '';
   password: string = '';
   rememberMe: boolean = false;
+  errorMessage: string = '';
 
   constructor(private router: Router) {}
 
   iniciarSesion() {
-    if (this.correo === '' || this.password === '') {
-      alert('Todos los campos son obligatorios');
+    this.errorMessage = '';
+
+    if (this.correo.trim() === '' || this.password === '') {
+      this.errorMessage = 'Todos los campos son obligatorios';
       return;
     }
 
-    console.log(this.correo);
-    console.log(this.password);
+    console.log('Inicio de sesión para:', this.correo);
 
-    alert('Usuario logueado correctamente');
     this.router.navigate(['/platform/']);
   }
 }

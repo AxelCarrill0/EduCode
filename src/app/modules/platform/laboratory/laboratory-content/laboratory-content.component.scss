@@ -1,48 +1,14 @@
 $color-emerald: #10b981;
-$color-emerald-glow: rgba(16, 185, 129, 0.08);
-$color-cyan: #06b6d4;
 $color-slate-900: #0f172a;
 $color-slate-800: #1e293b;
 $color-slate-700: #334155;
-$color-slate-600: #475569;
 $color-slate-500: #64748b;
 $color-slate-400: #94a3b8;
-$color-slate-300: #cbd5e1;
 $color-slate-200: #e2e8f0;
 $color-slate-100: #f1f5f9;
 $color-slate-50: #f8fafc;
 
 $font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
-
-// ===== DECORATIVE BACKGROUND =====
-.lab-decor {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-
-  .decor-symbol {
-    position: absolute;
-    left: var(--dx);
-    top: var(--dy);
-    font-size: var(--ds);
-    font-family: $font-mono;
-    font-weight: 700;
-    color: rgba(16, 185, 129, 0.06);
-    transform: rotate(var(--dr));
-    animation: decor-float 8s ease-in-out infinite;
-    animation-delay: var(--dd);
-    user-select: none;
-  }
-}
-
-@keyframes decor-float {
-  0%, 100% { transform: rotate(var(--dr)) translateY(0); opacity: 1; }
-  33% { transform: rotate(calc(var(--dr) + 3deg)) translateY(-6px); opacity: 0.7; }
-  66% { transform: rotate(calc(var(--dr) - 2deg)) translateY(4px); opacity: 0.9; }
-}
 
 // ===== CONTAINER =====
 .lab-container {
@@ -59,7 +25,13 @@ $font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monos
   align-items: flex-end;
   gap: 1.5rem;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+
+  .header-left {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.25rem;
+  }
 
   h1 {
     font-size: 1.75rem;
@@ -90,6 +62,12 @@ $font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monos
     align-items: stretch;
     gap: 1rem;
 
+    .header-left {
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
     h1 { font-size: 1.5rem; }
     p { font-size: 0.95rem; }
 
@@ -98,6 +76,94 @@ $font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monos
       justify-content: flex-end;
     }
   }
+}
+
+// ===== LANGUAGE SELECTOR =====
+.lang-selector {
+  position: relative;
+}
+
+.lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid $color-slate-200;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $color-slate-800;
+  transition: all 0.2s ease;
+  min-height: 42px;
+
+  i {
+    font-size: 1rem;
+    color: $color-emerald;
+  }
+
+  .arrow-icon {
+    font-size: 0.65rem;
+    color: $color-slate-400;
+    margin-left: 0.15rem;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    border-color: $color-emerald;
+    background: rgba(16, 185, 129, 0.03);
+  }
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 180px;
+  background: white;
+  border: 1px solid $color-slate-200;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  z-index: 100;
+  animation: dropdown-in 0.15s ease-out both;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $color-slate-700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  i {
+    font-size: 1rem;
+    color: $color-slate-400;
+  }
+
+  &:hover {
+    background: rgba(16, 185, 129, 0.05);
+    color: $color-slate-900;
+  }
+
+  &.active {
+    background: rgba(16, 185, 129, 0.08);
+    color: $color-emerald;
+    font-weight: 600;
+
+    i { color: $color-emerald; }
+  }
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 ::ng-deep .run-btn {
@@ -223,6 +289,12 @@ $font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monos
         height: 2px;
         background: white;
       }
+    }
+
+    .tab-ext {
+      font-weight: 400;
+      color: $color-slate-400;
+      font-size: 0.75rem;
     }
   }
 }
@@ -489,10 +561,4 @@ $font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monos
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-@keyframes decor-float {
-  0%, 100% { transform: rotate(var(--dr)) translateY(0); opacity: 1; }
-  33% { transform: rotate(calc(var(--dr) + 3deg)) translateY(-6px); opacity: 0.6; }
-  66% { transform: rotate(calc(var(--dr) - 2deg)) translateY(4px); opacity: 0.8; }
 }

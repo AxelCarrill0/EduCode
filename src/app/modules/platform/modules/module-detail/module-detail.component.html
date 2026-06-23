@@ -1,0 +1,85 @@
+<div class="detail-container" *ngIf="module">
+  <a class="back-link" routerLink="/platform/modules">
+    <i class="pi pi-arrow-left"></i>
+    Volver a módulos
+  </a>
+
+  <div class="unlock-banner" *ngIf="justUnlocked">
+    <i class="pi pi-trophy"></i>
+    ¡Logro desbloqueado: {{ justUnlocked }}!
+  </div>
+
+  <div class="detail-header" [style.--accent]="module.accent">
+    <div class="header-body">
+      <div class="header-icon" [style.background]="module.iconBg" [style.color]="module.accent">
+        <i [class]="module.icon"></i>
+      </div>
+      <div class="header-info">
+        <span class="diff-tag" [style.background]="module.iconBg" [style.color]="module.accent">
+          {{ module.difficulty }}
+        </span>
+        <h1>{{ module.name }}</h1>
+        <p>{{ module.description }}</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat">
+        <span class="hstat-value">{{ completedCount }}/{{ totalCount }}</span>
+        <span class="hstat-label">Lecciones</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-value">{{ progressPct }}%</span>
+        <span class="hstat-label">Completado</span>
+      </div>
+      <div class="hstat-bar">
+        <div class="hbar-fill" [style.width.%]="progressPct" [style.background]="module.accent"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-list">
+    <div class="lesson-item" *ngFor="let lesson of module.lessons; let i = index"
+      [class.completed]="lesson.completed"
+      [class.open]="openLesson === i">
+      <div class="lesson-header" (click)="toggleLesson(i)">
+        <div class="lesson-number" [style.background]="lesson.completed ? module.accent : 'transparent'"
+          [style.border-color]="module.accent"
+          [style.color]="lesson.completed ? '#fff' : module.accent">
+          <i *ngIf="lesson.completed" class="pi pi-check"></i>
+          <span *ngIf="!lesson.completed">{{ i + 1 }}</span>
+        </div>
+        <div class="lesson-info">
+          <span class="lesson-title">{{ lesson.title }}</span>
+          <span class="lesson-meta">
+            <span class="lesson-duration">{{ lesson.duration }}</span>
+            <span class="lesson-status" *ngIf="lesson.completed">Completado</span>
+          </span>
+        </div>
+        <i class="pi pi-chevron-down lesson-arrow"></i>
+      </div>
+      <div class="lesson-body" *ngIf="openLesson === i">
+        <div class="lesson-content" *ngFor="let block of lesson.content">
+          <div class="content-text" *ngIf="block.type === 'text'">{{ block.value }}</div>
+          <div class="content-code" *ngIf="block.type === 'code'">
+            <span class="code-label">Código de ejemplo</span>
+            <pre><code>{{ block.value }}</code></pre>
+          </div>
+        </div>
+        <div class="lesson-actions">
+          <button class="complete-btn" [style.--btn-accent]="module.accent"
+            (click)="markComplete(i)"
+            [disabled]="lesson.completed">
+            <i [class]="lesson.completed ? 'pi pi-check-circle' : 'pi pi-check'"></i>
+            {{ lesson.completed ? 'Completada' : 'Marcar como completada' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-empty" *ngIf="!module">
+  <i class="pi pi-exclamation-circle"></i>
+  <h2>Módulo no encontrado</h2>
+  <a class="back-link center" routerLink="/platform/modules">Volver a módulos</a>
+</div>

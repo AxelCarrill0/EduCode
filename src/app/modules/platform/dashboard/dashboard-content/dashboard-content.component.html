@@ -89,7 +89,7 @@
             <p-progressBar [value]="mod.progress" styleClass="module-progress"></p-progressBar>
             <div class="quick-module-footer">
               <span class="module-lessons">{{ mod.lessons }}</span>
-              <p-button label="Continuar" severity="success" [text]="true" [raised]="false" routerLink="/platform/modules"></p-button>
+              <p-button label="Continuar" severity="success" [text]="true" [raised]="false" [routerLink]="['/platform/module', mod.id]"></p-button>
             </div>
           </p-card>
         </div>
@@ -113,7 +113,6 @@
           </ng-template>
         </p-timeline>
       </p-panel>
-
 
     </div>
   </div>

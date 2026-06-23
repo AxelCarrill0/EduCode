@@ -56,13 +56,22 @@ $color-border: rgba(226, 232, 240, 0.8);
     padding: 1rem 1.5rem;
   }
 
+  @media (max-width: 480px) {
+    padding: 0.75rem 1rem;
+  }
+
   .header-logo {
     font-size: 1.8rem;
     font-weight: 800;
     color: $color-slate-900;
     letter-spacing: -0.05em;
     cursor: pointer;
+    text-decoration: none;
     transition: transform 0.2s ease;
+
+    @media (max-width: 480px) {
+      font-size: 1.45rem;
+    }
 
     &:hover {
       transform: scale(1.02);
@@ -77,6 +86,10 @@ $color-border: rgba(226, 232, 240, 0.8);
     display: flex;
     gap: 1rem;
 
+    @media (max-width: 480px) {
+      gap: 0.5rem;
+    }
+
     ::ng-deep {
       .p-button {
         font-family: inherit;
@@ -85,6 +98,11 @@ $color-border: rgba(226, 232, 240, 0.8);
         border-radius: 10px;
         padding: 0.55rem 1.25rem;
         transition: all 0.25s ease;
+
+        @media (max-width: 480px) {
+          padding: 0.45rem 0.85rem;
+          font-size: 0.82rem;
+        }
       }
       .nav-btn-outline {
         border-color: $color-emerald;
@@ -432,6 +450,31 @@ $color-border: rgba(226, 232, 240, 0.8);
         opacity: 0.35;
       }
     }
+
+    @media (max-width: 768px) {
+      .p-timeline-event {
+        flex-direction: row !important;
+        min-height: auto;
+        
+        &:nth-child(even) {
+          flex-direction: row !important;
+          
+          .p-timeline-event-content {
+            text-align: left !important;
+          }
+        }
+      }
+      .p-timeline-event-opposite {
+        display: none !important;
+      }
+      .p-timeline-event-separator {
+        flex-grow: 0;
+      }
+      .p-timeline-event-content {
+        padding: 0 0 1.5rem 1.1rem !important;
+        width: 100%;
+      }
+    }
   }
 
   .timeline-step-marker {
@@ -508,138 +551,6 @@ $color-border: rgba(226, 232, 240, 0.8);
   }
 }
 
-// SECCIÓN TESTIMONIOS - Carrusel PrimeNG
-.testimonials-carousel-section {
-  padding: 6rem 0;
-  border-top: 1px solid $color-border;
-  background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.02) 50%, transparent);
-
-  .section-title { margin-bottom: 3.5rem; }
-
-  .carousel-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  // Override PrimeNG Carousel controles
-  ::ng-deep .custom-testimonials-carousel {
-    .p-carousel-indicators {
-      padding: 1.5rem 0 0;
-
-      .p-carousel-indicator.p-highlight button {
-        background: $color-emerald;
-        width: 24px;
-      }
-
-      .p-carousel-indicator button {
-        width: 8px;
-        height: 8px;
-        border-radius: 99px;
-        transition: all 0.3s ease;
-        background: rgba(16, 185, 129, 0.25);
-      }
-    }
-
-    .p-carousel-prev,
-    .p-carousel-next {
-      color: $color-slate-500;
-      border: 1px solid $color-border;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: $color-emerald;
-        color: white;
-        border-color: $color-emerald;
-      }
-    }
-  }
-
-  .testimonial-slide {
-    padding: 0.75rem;
-  }
-
-  .testimonial-slide-inner {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    border-radius: 20px;
-    padding: 2.2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    height: 100%;
-    min-height: 200px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      border-color: rgba(16, 185, 129, 0.15);
-      box-shadow: 0 12px 28px rgba(16, 185, 129, 0.06);
-      transform: translateY(-4px);
-    }
-  }
-
-  .stars-rating {
-    display: flex;
-    gap: 0.25rem;
-    color: #f59e0b;
-    font-size: 0.9rem;
-  }
-
-  .testimonial-text {
-    font-size: 1.05rem;
-    color: $color-slate-700;
-    line-height: 1.7;
-    font-style: italic;
-    margin: 0;
-    flex: 1;
-  }
-
-  .testimonial-user {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-
-    .user-avatar-initials {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: white;
-      background: linear-gradient(135deg, #10b981, #06b6d4);
-      border: 2px solid rgba(16, 185, 129, 0.15);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      flex-shrink: 0;
-    }
-
-    .user-details {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-
-      h4 {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: $color-slate-900;
-        margin: 0;
-      }
-
-      span {
-        font-size: 0.82rem;
-        color: $color-slate-500;
-        font-weight: 500;
-      }
-    }
-  }
-}
 
 // SECCIÓN FAQ - Acordeón PrimeNG
 .faq-accordion-section {
@@ -707,6 +618,17 @@ $color-border: rgba(226, 232, 240, 0.8);
       background: white;
       padding: 0 1.5rem 1.5rem;
     }
+
+    @media (max-width: 768px) {
+      .p-accordion-header .p-accordion-header-link {
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
+      }
+      .p-accordion-content {
+        padding: 0 1.25rem 1.25rem;
+        font-size: 0.9rem;
+      }
+    }
   }
 
   .faq-answer-text {
@@ -735,6 +657,7 @@ $color-border: rgba(226, 232, 240, 0.8);
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       gap: 2.5rem;
+      text-align: center;
     }
   }
 
@@ -787,6 +710,10 @@ $color-border: rgba(226, 232, 240, 0.8);
       flex-direction: column;
       gap: 0.75rem;
 
+      @media (max-width: 768px) {
+        align-items: center;
+      }
+
       li a {
         color: $color-slate-700;
         text-decoration: none;
@@ -828,6 +755,10 @@ $color-border: rgba(226, 232, 240, 0.8);
     .social-icons {
       display: flex;
       gap: 0.75rem;
+
+      @media (max-width: 768px) {
+        justify-content: center;
+      }
 
       .social-icon {
         width: 38px;

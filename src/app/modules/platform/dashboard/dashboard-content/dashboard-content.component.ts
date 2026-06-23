@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TimelineModule } from 'primeng/timeline';
 import { ChartModule } from 'primeng/chart';
+import { ProgressService } from '../../progress/progress-content/progress.service';
 
 @Component({
   selector: 'app-dashboard-content',
@@ -27,22 +28,21 @@ import { ChartModule } from 'primeng/chart';
 export class DashboardContentComponent {
   userStats = {
     name: 'Usuario',
-    level: 'Básico',
     levelProgress: 35,
-    streak: 5,
-    modulesCompleted: 3,
-    totalModules: 7,
-    lessonsCompleted: 6,
-    totalLessons: 17,
-    inProgressLessons: 4,
-    pendingLessons: 7,
-    xp: 1250
+    streak: 0,
+    modulesCompleted: 0,
+    totalModules: 6,
+    lessonsCompleted: 0,
+    totalLessons: 25,
+    inProgressLessons: 0,
+    pendingLessons: 25,
+    xp: 0
   };
 
   recentModules = [
-    { name: 'Introducción a Python', progress: 80, icon: 'pi pi-python', lessons: '4/5 lecciones' },
-    { name: 'Variables y tipos', progress: 50, icon: 'pi pi-database', lessons: '2/4 lecciones' },
-    { name: 'Estructuras de control', progress: 20, icon: 'pi pi-sitemap', lessons: '1/5 lecciones' }
+    { name: 'Introducción a Python', progress: 80, icon: 'pi pi-python', lessons: '4/5 lecciones', id: 0 },
+    { name: 'Variables', progress: 50, icon: 'pi pi-database', lessons: '2/4 lecciones', id: 1 },
+    { name: 'Condicionales', progress: 20, icon: 'pi pi-sitemap', lessons: '1/5 lecciones', id: 4 }
   ];
 
   activities = [
@@ -71,4 +71,33 @@ export class DashboardContentComponent {
     responsive: false,
     maintainAspectRatio: false
   };
+
+  constructor(public progress: ProgressService) {
+    this.syncStats();
+  }
+
+  private syncStats(): void {
+    this.userStats.lessonsCompleted = this.progress.getTotalCompletedLessons();
+    this.userStats.totalLessons = this.progress.getTotalLessons();
+    this.userStats.modulesCompleted = this.progress.getModulesCompleted();
+    this.userStats.totalModules = this.progress.getModules().length;
+    this.userStats.xp = this.progress.getXp();
+    this.userStats.streak = this.progress.getStreak();
+    this.userStats.inProgressLessons = this.progress.getInProgressLessons();
+    this.userStats.pendingLessons = this.progress.getPendingLessons();
+    this.userStats.levelProgress = this.progress.getTotalLessons() > 0
+      ? Math.round((this.progress.getTotalCompletedLessons() / this.progress.getTotalLessons()) * 100) : 0;
+
+    this.progressChartData.datasets[0].data = [
+      this.progress.getTotalCompletedLessons(),
+      this.progress.getInProgressLessons(),
+      this.progress.getPendingLessons()
+    ];
+
+    this.recentModules.forEach(m => {
+      const p = this.progress.getModuleProgress(m.id);
+      m.progress = p.pct;
+      m.lessons = `${p.completed}/${p.total} lecciones`;
+    });
+  }
 }

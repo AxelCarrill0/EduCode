@@ -49,7 +49,6 @@
         <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Abrir menú" aria-expanded="false" type="button">
           <i class="pi" [class.pi-bars]="!mobileMenuOpen()" [class.pi-times]="mobileMenuOpen()"></i>
         </button>
-        <i class="pi pi-circle-fill status-dot"></i>
         <span class="topbar-title">Plataforma Educativa</span>
       </div>
       <div class="topbar-right">
@@ -61,7 +60,9 @@
           styleClass="logout-btn"
           routerLink="/">
         </p-button>
-        <p-avatar label="U" shape="circle" size="large" styleClass="topbar-avatar"></p-avatar>
+        <a routerLink="/platform/settings" class="topbar-avatar-link">
+          <p-avatar label="U" shape="circle" size="large" styleClass="topbar-avatar"></p-avatar>
+        </a>
       </div>
     </header>
 

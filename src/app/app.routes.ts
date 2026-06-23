@@ -43,6 +43,12 @@ export const routes: Routes = [
             .then(m => m.ModulesContentComponent)
       },
       {
+        path: 'module/:id',
+        loadComponent: () =>
+          import('./modules/platform/modules/module-detail/module-detail.component')
+            .then(m => m.ModuleDetailComponent)
+      },
+      {
         path: 'laboratory',
         loadComponent: () =>
           import('./modules/platform/laboratory/laboratory-content/laboratory-content.component')
@@ -59,6 +65,24 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./modules/platform/settings/settings-content/settings-content.component')
             .then(m => m.SettingsContentComponent)
+      },
+      {
+        path: 'settings/profile',
+        loadComponent: () =>
+          import('./modules/platform/settings/profile/profile.component')
+            .then(m => m.ProfileComponent)
+      },
+      {
+        path: 'settings/change-password',
+        loadComponent: () =>
+          import('./modules/platform/settings/change-password/change-password.component')
+            .then(m => m.ChangePasswordComponent)
+      },
+      {
+        path: 'settings/delete-account',
+        loadComponent: () =>
+          import('./modules/platform/settings/delete-account/delete-account.component')
+            .then(m => m.DeleteAccountComponent)
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

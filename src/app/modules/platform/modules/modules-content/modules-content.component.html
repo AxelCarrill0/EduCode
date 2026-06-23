@@ -94,7 +94,7 @@
               <i class="pi pi-check-circle"></i>
               Completado
             </span>
-            <button class="enter-btn" [style.--btn-accent]="mod.accent" [class.btn-locked]="mod.status === 'not-started'">
+            <button class="enter-btn" [style.--btn-accent]="mod.accent" [class.btn-locked]="mod.status === 'not-started'" [routerLink]="['/platform/module', modules.indexOf(mod)]">
               <span>{{ mod.status === 'completed' ? 'Repasar' : mod.status === 'in-progress' ? 'Continuar' : 'Comenzar' }}</span>
               <i class="pi pi-arrow-right"></i>
             </button>

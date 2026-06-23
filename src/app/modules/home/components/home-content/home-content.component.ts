@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
 
 import { TimelineModule } from 'primeng/timeline';
-import { CarouselModule } from 'primeng/carousel';
 import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
-
-import { Testimonial } from '../../../../shared/models/testimonial.interface';
-import { TestimonialService } from '../../../../shared/services/testimonial.service';
 
 @Component({
   selector: 'app-home-content',
@@ -20,14 +16,13 @@ import { TestimonialService } from '../../../../shared/services/testimonial.serv
     RouterModule,
 
     TimelineModule,
-    CarouselModule,
     AccordionModule,
     CardModule
   ],
   templateUrl: './home-content.component.html',
   styleUrl: './home-content.component.scss',
 })
-export class HomeContentComponent implements OnInit {
+export class HomeContentComponent {
 
   features = [
     {
@@ -71,21 +66,6 @@ export class HomeContentComponent implements OnInit {
     }
   ];
 
-  testimonials: Testimonial[] = [];
-
-  carouselResponsiveOptions = [
-    {
-      breakpoint: '1024px',
-      numVisible: 2,
-      numScroll: 1
-    },
-    {
-      breakpoint: '768px',
-      numVisible: 1,
-      numScroll: 1
-    }
-  ];
-
   faqs = [
     {
       question: '¿Necesito conocimientos previos de programación?',
@@ -100,16 +80,6 @@ export class HomeContentComponent implements OnInit {
       answer: 'Cuando ejecutas tu código, nuestro sistema realiza pruebas unitarias automatizadas sobre tu solución para verificar si cumple con las condiciones del ejercicio, devolviéndote feedback instantáneo.',
     }
   ];
-
-  constructor(private testimonialService: TestimonialService) {}
-
-  ngOnInit(): void {
-    this.testimonials = this.testimonialService.getAll();
-  }
-
-  getInitials(name: string): string {
-    return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
-  }
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });

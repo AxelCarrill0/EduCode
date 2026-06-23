@@ -1,9 +1,9 @@
 <div class="home-container">
   <!-- Header Glassmórfico Sticky -->
   <header class="header">
-    <div class="header-logo" routerLink="/">
+    <a class="header-logo" routerLink="/">
       <span class="logo-accent">Edu</span>Code
-    </div>
+    </a>
 
     <div class="header-button">
       <p-button label="Iniciar Sesión" routerLink="/login" severity="success" [outlined]="true" styleClass="nav-btn-outline"></p-button>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="welcome-image">
-        <img src="assets/img_editor.png" alt="EduCode Workspace">
+        <img src="assets/img_editor.png" alt="EduCode Workspace" loading="lazy" width="500" height="320">
       </div>
     </section>
 
@@ -85,35 +85,6 @@
       </div>
     </section>
 
-    <!-- Opiniones de Estudiantes - Carrusel Interactivo de PrimeNG -->
-    <section class="testimonials-carousel-section">
-      <div class="section-title">
-        <h2>Opiniones de Estudiantes</h2>
-        <p>Descubre cómo miles de alumnos están transformando sus habilidades y logrando sus metas.</p>
-      </div>
-
-      <div class="carousel-wrapper">
-        <p-carousel [value]="testimonials" [numVisible]="2" [numScroll]="1" [circular]="true" [responsiveOptions]="carouselResponsiveOptions" styleClass="custom-testimonials-carousel">
-          <ng-template let-t pTemplate="item">
-            <div class="testimonial-slide">
-              <div class="testimonial-slide-inner">
-                <div class="stars-rating">
-                  <i class="pi pi-star-fill" *ngFor="let star of [1, 2, 3, 4, 5]"></i>
-                </div>
-                <p class="testimonial-text">"{{ t.text }}"</p>
-                <div class="testimonial-user">
-                  <div class="user-avatar-initials">{{ getInitials(t.name) }}</div>
-                  <div class="user-details">
-                    <h4>{{ t.name }}</h4>
-                    <span>{{ t.role }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-carousel>
-      </div>
-    </section>
 
     <!-- Preguntas Frecuentes - Acordeón Nativo de PrimeNG -->
     <section class="faq-accordion-section">
@@ -164,9 +135,9 @@
         <h3>Redes Sociales</h3>
         <p>Síguenos para estar al día con nuevos desafíos.</p>
         <div class="social-icons">
-          <a class="social-icon" aria-label="Facebook"><i class="pi pi-facebook"></i></a>
-          <a class="social-icon" aria-label="Instagram"><i class="pi pi-instagram"></i></a>
-          <a class="social-icon" aria-label="Twitter"><i class="pi pi-twitter"></i></a>
+          <a class="social-icon" href="javascript:void(0)" role="button" aria-label="Facebook"><i class="pi pi-facebook"></i></a>
+          <a class="social-icon" href="javascript:void(0)" role="button" aria-label="Instagram"><i class="pi pi-instagram"></i></a>
+          <a class="social-icon" href="javascript:void(0)" role="button" aria-label="Twitter"><i class="pi pi-twitter"></i></a>
         </div>
       </div>
     </div>

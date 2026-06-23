@@ -343,6 +343,12 @@ $color-slate-50: #f8fafc;
     border-color: $color-emerald;
   }
 
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: $color-slate-50;
+  }
+
   @media (max-width: 500px) {
     width: 100%;
   }

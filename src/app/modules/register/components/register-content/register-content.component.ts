@@ -31,28 +31,29 @@ export class RegisterContentComponent {
   password: string = '';
   confirmPassword: string = '';
   acceptTerms: boolean = false;
+  errorMessage: string = '';
 
   constructor(private router: Router) {}
 
   registrar() {
-    if (this.nombre === '' || this.correo === '' || this.password === '' || this.confirmPassword === '') {
-      alert('Todos los campos son obligatorios');
+    this.errorMessage = '';
+
+    if (this.nombre.trim() === '' || this.correo.trim() === '' || this.password === '' || this.confirmPassword === '') {
+      this.errorMessage = 'Todos los campos son obligatorios';
       return;
     }
 
     if (this.password !== this.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      this.errorMessage = 'Las contraseñas no coinciden';
       return;
     }
 
     if (!this.acceptTerms) {
-      alert('Debes aceptar los términos y condiciones');
+      this.errorMessage = 'Debes aceptar los términos y condiciones';
       return;
     }
 
-    console.log(this.nombre);
-    console.log(this.correo);
-    console.log(this.password);
+    console.log('Registro exitoso para:', this.nombre, this.correo);
 
     alert('Usuario registrado correctamente');
     this.router.navigate(['/login']);

@@ -25,7 +25,7 @@
             <span class="profile-name">Usuario</span>
             <span class="profile-email">usuario&#64;educloud.com</span>
           </div>
-          <p-button label="Editar" icon="pi pi-pencil" severity="success" [text]="true" styleClass="profile-edit-btn"></p-button>
+          <p-button label="Editar" icon="pi pi-pencil" severity="success" [text]="true" styleClass="profile-edit-btn" routerLink="/platform/settings/profile"></p-button>
         </div>
         <div class="profile-detail">
           <div class="detail-row">
@@ -62,11 +62,11 @@
               <span class="toggle-desc">Cambia entre tema claro y oscuro</span>
             </div>
           </div>
-          <div class="toggle-switch-wrapper" (click)="darkMode = !darkMode; onDarkModeToggle()">
-            <div class="toggle-switch" [class.active]="darkMode">
+          <div class="toggle-switch-wrapper" (click)="settings.darkMode = !settings.darkMode; onDarkModeToggle()">
+            <div class="toggle-switch" [class.active]="settings.darkMode">
               <div class="toggle-knob">
-                <i *ngIf="!darkMode" class="pi pi-sun"></i>
-                <i *ngIf="darkMode" class="pi pi-moon"></i>
+                <i *ngIf="!settings.darkMode" class="pi pi-sun"></i>
+                <i *ngIf="settings.darkMode" class="pi pi-moon"></i>
               </div>
             </div>
           </div>
@@ -82,11 +82,8 @@
               <span class="toggle-desc">Idioma de la interfaz</span>
             </div>
           </div>
-          <select [(ngModel)]="language" class="lang-select">
+          <select [(ngModel)]="settings.language" class="lang-select" disabled>
             <option value="es">Español</option>
-            <option value="en">English</option>
-            <option value="pt">Português</option>
-            <option value="fr">Français</option>
           </select>
         </div>
       </div>
@@ -110,7 +107,7 @@
               <span class="toggle-desc">Recibe resúmenes semanales de tu progreso</span>
             </div>
           </div>
-          <p-inputSwitch [(ngModel)]="emailNotifications"></p-inputSwitch>
+          <p-inputSwitch [(ngModel)]="settings.emailNotifications" (ngModelChange)="onNotificationChange()"></p-inputSwitch>
         </div>
         <div class="toggle-row">
           <div class="toggle-info">
@@ -120,7 +117,7 @@
               <span class="toggle-desc">Notificaciones para mantener tu racha de estudio</span>
             </div>
           </div>
-          <p-inputSwitch [(ngModel)]="emailNotifications"></p-inputSwitch>
+          <p-inputSwitch [(ngModel)]="settings.reminderNotifications" (ngModelChange)="onNotificationChange()"></p-inputSwitch>
         </div>
         <div class="toggle-row">
           <div class="toggle-info">
@@ -130,7 +127,7 @@
               <span class="toggle-desc">Notificaciones al obtener nuevos logros</span>
             </div>
           </div>
-          <p-inputSwitch [(ngModel)]="emailNotifications"></p-inputSwitch>
+          <p-inputSwitch [(ngModel)]="settings.achievementNotifications" (ngModelChange)="onNotificationChange()"></p-inputSwitch>
         </div>
       </div>
     </div>
@@ -153,7 +150,7 @@
               <span class="action-desc">Actualiza tu contraseña actual</span>
             </div>
           </div>
-          <p-button label="Cambiar" icon="pi pi-lock" severity="success" [outlined]="true" styleClass="action-btn"></p-button>
+          <p-button label="Cambiar" icon="pi pi-lock" severity="success" [outlined]="true" styleClass="action-btn" routerLink="/platform/settings/change-password"></p-button>
         </div>
         <div class="action-row">
           <div class="action-info">
@@ -163,7 +160,7 @@
               <span class="action-desc">Esta acción es irreversible</span>
             </div>
           </div>
-          <p-button label="Eliminar" icon="pi pi-exclamation-triangle" severity="danger" [outlined]="true" styleClass="action-btn danger-btn"></p-button>
+          <p-button label="Eliminar" icon="pi pi-exclamation-triangle" severity="danger" [outlined]="true" styleClass="action-btn danger-btn" routerLink="/platform/settings/delete-account"></p-button>
         </div>
       </div>
     </div>

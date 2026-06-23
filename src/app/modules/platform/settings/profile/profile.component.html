@@ -1,0 +1,30 @@
+<div class="subview-container">
+  <a class="back-link" routerLink="/platform/settings">
+    <i class="pi pi-arrow-left"></i>
+    Volver a configuración
+  </a>
+
+  <div class="subview-card">
+    <h1>Editar perfil</h1>
+    <p>Actualiza tu información personal.</p>
+
+    <div class="form-group">
+      <label for="pName">Nombre</label>
+      <input id="pName" type="text" class="form-input" [(ngModel)]="name" maxlength="60">
+    </div>
+
+    <div class="form-group">
+      <label for="pEmail">Correo electrónico</label>
+      <input id="pEmail" type="email" class="form-input" [(ngModel)]="email" maxlength="80">
+    </div>
+
+    <div class="form-group">
+      <label for="pBio">Biografía</label>
+      <textarea id="pBio" class="form-textarea" [(ngModel)]="bio" maxlength="200" rows="3"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <p-button label="Guardar cambios" icon="pi pi-check" severity="success" (onClick)="save()"></p-button>
+    </div>
+  </div>
+</div>

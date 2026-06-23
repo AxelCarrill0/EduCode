@@ -1,9 +1,24 @@
 <div class="lab-container">
 
   <div class="lab-header">
-    <div>
-      <h1>Laboratorio de código</h1>
-      <p>Escribe, ejecuta y prueba tu código en tiempo real.</p>
+    <div class="header-left">
+      <div class="lang-selector">
+        <div class="lang-trigger" (click)="langOpen = !langOpen">
+          <i [class]="currentLang.icon"></i>
+          <span>{{ currentLang.label }}</span>
+          <i class="pi pi-chevron-down arrow-icon"></i>
+        </div>
+        <div class="lang-dropdown" *ngIf="langOpen" (click)="langOpen = false">
+          <div class="lang-option" *ngFor="let lang of languages" [class.active]="lang.value === selectedLanguage" (click)="selectLanguage(lang.value)">
+            <i [class]="lang.icon"></i>
+            <span>{{ lang.label }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-info">
+        <h1>Laboratorio de código</h1>
+        <p>Escribe, ejecuta y prueba tu código en tiempo real.</p>
+      </div>
     </div>
     <div class="header-actions">
       <p-button label="Limpiar" icon="pi pi-trash" severity="secondary" [text]="true" (onClick)="clearConsole()" styleClass="clear-btn"></p-button>
@@ -11,17 +26,13 @@
     </div>
   </div>
 
-  <div class="lab-decor">
-    <span class="decor-symbol" *ngFor="let sym of decorSymbols" [style.--dx]="sym.x" [style.--dy]="sym.y" [style.--ds]="sym.size" [style.--dd]="sym.delay" [style.--dr]="sym.rotation">{{ sym.char }}</span>
-  </div>
-
   <div class="lab-content">
 
     <div class="editor-panel">
       <div class="panel-tabs">
         <div class="tab active">
-          <i [class]="getCurrentLang().icon"></i>
-          <span>{{ getCurrentLang().label === 'Python' ? 'main.py' : getCurrentLang().label === 'JavaScript' ? 'script.js' : getCurrentLang().label === 'Java' ? 'Main.java' : 'main.cpp' }}</span>
+          <i [class]="currentLang.icon"></i>
+          <span>{{ currentLang.label }} <span class="tab-ext">· {{ currentLang.value === 'python' ? 'main.py' : currentLang.value === 'javascript' ? 'script.js' : currentLang.value === 'java' ? 'Main.java' : 'main.cpp' }}</span></span>
         </div>
       </div>
       <div class="editor-body">
@@ -36,7 +47,7 @@
         ></textarea>
       </div>
       <div class="editor-statusbar">
-        <span class="status-item">{{ getCurrentLang().label }}</span>
+        <span class="status-item">{{ currentLang.label }}</span>
         <span class="status-item">{{ codeLines.length }} líneas</span>
         <span class="status-item">Ln {{ codeLines.length }}, Col 1</span>
         <span class="status-item">UTF-8</span>
@@ -61,7 +72,7 @@
       </div>
       <div class="console-output">
         <div class="console-topbar">
-          <span class="console-path">{{ getCurrentLang().label === 'Python' ? '~/workspace' : '~/workspace' }} <span class="path-sep">&gt;</span> main</span>
+          <span class="console-path">~/workspace <span class="path-sep">&gt;</span> {{ currentLang.value === 'python' ? 'main.py' : currentLang.value === 'javascript' ? 'script.js' : currentLang.value === 'java' ? 'Main.java' : 'main.cpp' }}</span>
           <span class="console-status" [class.running]="isRunning">
             <span class="status-dot"></span>
             {{ isRunning ? 'Ejecutando...' : 'Listo' }}

@@ -8,21 +8,11 @@ interface Language {
   label: string;
   icon: string;
   template: string;
-  color: string;
 }
 
 interface ConsoleLine {
   text: string;
   type: 'input' | 'output' | 'error' | 'info';
-}
-
-interface DecorSymbol {
-  char: string;
-  x: string;
-  y: string;
-  size: string;
-  delay: string;
-  rotation: string;
 }
 
 @Component({
@@ -38,7 +28,6 @@ export class LaboratoryContentComponent {
       value: 'python',
       label: 'Python',
       icon: 'pi pi-python',
-      color: '#10b981',
       template: `# Escribe tu código aquí
 
 print("Hola, mundo!")`
@@ -47,7 +36,6 @@ print("Hola, mundo!")`
       value: 'javascript',
       label: 'JavaScript',
       icon: 'pi pi-code',
-      color: '#f59e0b',
       template: `// Escribe tu código aquí
 
 console.log("Hola, mundo!");`
@@ -56,7 +44,6 @@ console.log("Hola, mundo!");`
       value: 'java',
       label: 'Java',
       icon: 'pi pi-cog',
-      color: '#ef4444',
       template: `public class Main {
     public static void main(String[] args) {
         System.out.println("Hola, mundo!");
@@ -67,7 +54,6 @@ console.log("Hola, mundo!");`
       value: 'cpp',
       label: 'C++',
       icon: 'pi pi-cog',
-      color: '#3b82f6',
       template: `#include <iostream>
 using namespace std;
 
@@ -79,27 +65,13 @@ int main() {
   ];
 
   selectedLanguage = 'python';
+  langOpen = false;
   code = this.getCurrentTemplate();
   codeLines: number[] = [];
   consoleLines: ConsoleLine[] = [
     { text: 'Laboratorio listo. Selecciona un lenguaje y escribe tu código.', type: 'info' }
   ];
   isRunning = false;
-
-  decorSymbols: DecorSymbol[] = [
-    { char: '{', x: '8%', y: '15%', size: '1.8rem', delay: '0s', rotation: '0deg' },
-    { char: '}', x: '92%', y: '25%', size: '1.8rem', delay: '2s', rotation: '0deg' },
-    { char: '/*', x: '5%', y: '55%', size: '1.4rem', delay: '4s', rotation: '0deg' },
-    { char: '*/', x: '95%', y: '65%', size: '1.4rem', delay: '1s', rotation: '0deg' },
-    { char: 'for', x: '12%', y: '80%', size: '1rem', delay: '3s', rotation: '-5deg' },
-    { char: '()', x: '88%', y: '10%', size: '1.2rem', delay: '5s', rotation: '10deg' },
-    { char: '=>', x: '6%', y: '40%', size: '1.1rem', delay: '1.5s', rotation: '15deg' },
-    { char: 'fn', x: '94%', y: '45%', size: '1.3rem', delay: '2.5s', rotation: '-10deg' },
-    { char: 'class', x: '3%', y: '70%', size: '0.9rem', delay: '3.5s', rotation: '8deg' },
-    { char: 'new', x: '97%', y: '85%', size: '1rem', delay: '4.5s', rotation: '-8deg' },
-  ];
-
-  hasErrorLines = false;
 
   constructor() {
     this.updateCodeLines();
@@ -109,10 +81,6 @@ int main() {
     return this.languages.find(l => l.value === this.selectedLanguage)!;
   }
 
-  getCurrentLang(): Language {
-    return this.currentLang;
-  }
-
   getCurrentTemplate(): string {
     return this.currentLang.template;
   }
@@ -120,6 +88,11 @@ int main() {
   updateCodeLines(): void {
     const count = this.code.split('\n').length;
     this.codeLines = Array.from({ length: count }, (_, i) => i + 1);
+  }
+
+  selectLanguage(value: string): void {
+    this.selectedLanguage = value;
+    this.onLanguageChange();
   }
 
   onLanguageChange(): void {
@@ -168,9 +141,20 @@ int main() {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboard(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.langOpen = false;
+    }
     if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
       event.preventDefault();
       this.execute();
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (this.langOpen && !target.closest('.lang-selector')) {
+      this.langOpen = false;
     }
   }
 }

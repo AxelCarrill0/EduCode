@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { TagModule } from 'primeng/tag';
+import { RouterModule } from '@angular/router';
 
 interface ModuleItem {
   name: string;
@@ -14,7 +13,6 @@ interface ModuleItem {
   progress: number;
   difficulty: string;
   status: 'not-started' | 'in-progress' | 'completed';
-  category: string;
   xp: number;
   isNew?: boolean;
 }
@@ -22,7 +20,7 @@ interface ModuleItem {
 @Component({
   selector: 'app-modules-content',
   standalone: true,
-  imports: [CommonModule, ButtonModule, TagModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './modules-content.component.html',
   styleUrl: './modules-content.component.scss'
 })
@@ -47,7 +45,6 @@ export class ModulesContentComponent {
       progress: 80,
       difficulty: 'Principiante',
       status: 'in-progress',
-      category: 'python',
       xp: 250
     },
     {
@@ -61,7 +58,6 @@ export class ModulesContentComponent {
       progress: 50,
       difficulty: 'Principiante',
       status: 'in-progress',
-      category: 'python',
       xp: 180
     },
     {
@@ -75,7 +71,6 @@ export class ModulesContentComponent {
       progress: 0,
       difficulty: 'Principiante',
       status: 'not-started',
-      category: 'python',
       xp: 200
     },
     {
@@ -89,7 +84,6 @@ export class ModulesContentComponent {
       progress: 0,
       difficulty: 'Principiante',
       status: 'not-started',
-      category: 'python',
       xp: 150
     },
     {
@@ -103,7 +97,6 @@ export class ModulesContentComponent {
       progress: 0,
       difficulty: 'Intermedio',
       status: 'not-started',
-      category: 'python',
       xp: 300
     },
     {
@@ -117,7 +110,6 @@ export class ModulesContentComponent {
       progress: 0,
       difficulty: 'Intermedio',
       status: 'not-started',
-      category: 'python',
       xp: 280,
       isNew: true
     }
@@ -142,10 +134,6 @@ export class ModulesContentComponent {
   get filteredModules(): ModuleItem[] {
     if (this.activeFilter === 'all') return this.modules;
     return this.modules.filter(m => m.status === this.activeFilter);
-  }
-
-  get hasActiveFilter(): boolean {
-    return this.activeFilter !== 'all';
   }
 
   get filteredCount(): number {

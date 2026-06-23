@@ -5,6 +5,7 @@ import { RouterModule } from "@angular/router";
 import { AvatarModule } from "primeng/avatar";
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
+import { SettingsService, AppSettings } from './settings.service';
 
 @Component({
   selector: 'app-settings-content',
@@ -14,14 +15,22 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './settings-content.component.scss'
 })
 export class SettingsContentComponent {
-  darkMode = false;
-  emailNotifications = true;
-  language = 'es';
+  settings: AppSettings;
+
+  constructor(private settingsService: SettingsService) {
+    this.settings = this.settingsService.get();
+  }
 
   onDarkModeToggle(): void {
-    // TODO: Implement dark mode logic
-    // This will toggle a CSS class on the document body
-    // document.body.classList.toggle('dark-mode', this.darkMode);
-    console.log('Dark mode:', this.darkMode);
+    this.settingsService.update({ darkMode: this.settings.darkMode });
+    document.body.classList.toggle('dark-mode', this.settings.darkMode);
+  }
+
+  onNotificationChange(): void {
+    this.settingsService.update({
+      emailNotifications: this.settings.emailNotifications,
+      reminderNotifications: this.settings.reminderNotifications,
+      achievementNotifications: this.settings.achievementNotifications,
+    });
   }
 }

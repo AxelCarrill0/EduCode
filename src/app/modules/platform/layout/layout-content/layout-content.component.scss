@@ -1,13 +1,6 @@
 $color-emerald: #10b981;
-$color-emerald-hover: #059669;
 $color-cyan: #06b6d4;
-$color-slate-900: #0f172a;
-$color-slate-800: #1e293b;
-$color-slate-700: #334155;
 $color-slate-600: #475569;
-$color-slate-500: #64748b;
-$color-slate-400: #94a3b8;
-$color-slate-300: #cbd5e1;
 $color-slate-200: #e2e8f0;
 $color-slate-100: #f1f5f9;
 $color-slate-50: #f8fafc;
@@ -329,12 +322,6 @@ $color-slate-50: #f8fafc;
   align-items: center;
   gap: 0.75rem;
 
-  .status-dot {
-    font-size: 0.55rem;
-    color: $color-emerald;
-    animation: pulse-dot 2s infinite;
-  }
-
   .topbar-title {
     font-size: 0.95rem;
     font-weight: 600;
@@ -411,6 +398,11 @@ $color-slate-50: #f8fafc;
   }
 }
 
+.topbar-avatar-link {
+  display: flex;
+  text-decoration: none;
+}
+
 // ===== PAGE CONTENT =====
 .page-content {
   flex: 1;
@@ -422,10 +414,4 @@ $color-slate-50: #f8fafc;
   @media (max-width: 768px) {
     padding: 1rem 0.75rem;
   }
-}
-
-@keyframes pulse-dot {
-  0% { opacity: 1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 1; }
 }
