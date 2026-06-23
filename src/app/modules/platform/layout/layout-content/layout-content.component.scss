@@ -45,6 +45,7 @@ $color-slate-50: #f8fafc;
     height: 100vh;
     height: 100dvh;
     z-index: 1100;
+    overflow: hidden;
     padding: 1.5rem 1rem;
     flex-direction: column;
     transform: translateX(-100%);
@@ -100,6 +101,7 @@ $color-slate-50: #f8fafc;
   flex-direction: column;
   gap: 0.2rem;
   flex: 1;
+  overflow-y: auto;
   position: relative;
   z-index: 1;
   padding: 0.25rem 0;
@@ -225,6 +227,31 @@ $color-slate-50: #f8fafc;
   }
 }
 
+.sidebar-logout-btn {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  i {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+  }
+}
+
 ::ng-deep .sidebar-level-tag {
   .p-tag {
     font-size: 0.7rem;
@@ -327,10 +354,6 @@ $color-slate-50: #f8fafc;
     font-weight: 600;
     color: $color-slate-600;
     letter-spacing: 0.02em;
-
-    @media (max-width: 480px) {
-      display: none;
-    }
   }
 }
 
@@ -341,41 +364,6 @@ $color-slate-50: #f8fafc;
 
   @media (max-width: 768px) {
     gap: 0.5rem;
-  }
-}
-
-::ng-deep .logout-btn {
-  .p-button {
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.5rem 1.1rem;
-    border-radius: 10px;
-    border-color: $color-slate-200;
-    color: $color-slate-600;
-    background: transparent;
-    transition: all 0.2s ease;
-    min-height: 40px;
-
-    &:hover {
-      border-color: $color-emerald;
-      color: $color-emerald;
-      background: rgba(16, 185, 129, 0.04);
-    }
-
-    @media (max-width: 768px) {
-      padding: 0.45rem 0.75rem;
-      font-size: 0.85rem;
-
-      .p-button-label {
-        display: none;
-      }
-
-      .p-button-icon {
-        font-size: 0.9rem;
-        margin-right: 0;
-      }
-    }
   }
 }
 

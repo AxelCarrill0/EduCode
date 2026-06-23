@@ -37,29 +37,26 @@
           <span class="sidebar-username">Usuario</span>
           <p-tag value="Nivel Básico" severity="success" styleClass="sidebar-level-tag"></p-tag>
         </div>
+        <button class="sidebar-logout-btn" routerLink="/" title="Cerrar sesión">
+          <i class="pi pi-sign-out"></i>
+        </button>
       </div>
     </div>
   </aside>
 
-  <div class="mobile-overlay" [class.overlay-visible]="mobileMenuOpen()" (click)="closeMobileMenu()" [attr.aria-hidden]="!mobileMenuOpen()"></div>
+  <div class="mobile-overlay" [class.overlay-visible]="mobileMenuOpen()" (click)="closeMobileMenu()"
+    [attr.aria-hidden]="!mobileMenuOpen()"></div>
 
   <div class="main-area">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Abrir menú" aria-expanded="false" type="button">
+        <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Abrir menú" aria-expanded="false"
+          type="button">
           <i class="pi" [class.pi-bars]="!mobileMenuOpen()" [class.pi-times]="mobileMenuOpen()"></i>
         </button>
         <span class="topbar-title">Plataforma Educativa</span>
       </div>
       <div class="topbar-right">
-        <p-button
-          label="Cerrar Sesión"
-          icon="pi pi-sign-out"
-          severity="success"
-          [outlined]="true"
-          styleClass="logout-btn"
-          routerLink="/">
-        </p-button>
         <a routerLink="/platform/settings" class="topbar-avatar-link">
           <p-avatar label="U" shape="circle" size="large" styleClass="topbar-avatar"></p-avatar>
         </a>

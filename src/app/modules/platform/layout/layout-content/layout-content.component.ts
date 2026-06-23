@@ -1,13 +1,12 @@
 import { Component, signal, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from "primeng/button";
 import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-layout-content',
   standalone: true,
-  imports: [RouterModule, ButtonModule, AvatarModule, TagModule],
+  imports: [RouterModule, AvatarModule, TagModule],
   templateUrl: './layout-content.component.html',
   styleUrl: './layout-content.component.scss'
 })
@@ -15,11 +14,16 @@ export class LayoutContentComponent {
   mobileMenuOpen = signal(false);
 
   toggleMobileMenu(): void {
-    this.mobileMenuOpen.update(v => !v);
+    this.mobileMenuOpen.update(v => {
+      const next = !v;
+      document.body.style.overflow = next ? 'hidden' : '';
+      return next;
+    });
   }
 
   closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
+    document.body.style.overflow = '';
   }
 
   @HostListener('document:keydown.escape')
