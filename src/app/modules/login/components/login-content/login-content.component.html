@@ -92,7 +92,7 @@
       <div class="form-options">
         <p-checkbox [(ngModel)]="rememberMe" [binary]="true" inputId="remember-me"></p-checkbox>
         <label for="remember-me" class="remember-label">Recordar mi sesión</label>
-        <a class="forgot-link">¿Olvidaste tu contraseña?</a>
+        <a class="forgot-link" (click)="errorMessage = 'Funcionalidad en desarrollo. Contacta a soporte.'">¿Olvidaste tu contraseña?</a>
       </div>
 
       <p-button

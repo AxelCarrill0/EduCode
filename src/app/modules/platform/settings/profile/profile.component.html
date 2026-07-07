@@ -15,7 +15,8 @@
 
     <div class="form-group">
       <label for="pEmail">Correo electrónico</label>
-      <input id="pEmail" type="email" class="form-input" [(ngModel)]="email" maxlength="80">
+      <input id="pEmail" type="email" class="form-input" [(ngModel)]="email" maxlength="80" disabled>
+      <span class="form-hint">El correo no se puede modificar.</span>
     </div>
 
     <div class="form-group">
@@ -24,7 +25,17 @@
     </div>
 
     <div class="form-actions">
-      <p-button label="Guardar cambios" icon="pi pi-check" severity="success" (onClick)="save()"></p-button>
+      <p-button label="Guardar cambios" icon="pi pi-check" severity="success" (onClick)="save()" [disabled]="saving"></p-button>
+    </div>
+
+    <div *ngIf="error" class="form-message error">
+      <i class="pi pi-exclamation-circle"></i>
+      <span>{{ error }}</span>
+    </div>
+
+    <div *ngIf="success" class="form-message success">
+      <i class="pi pi-check-circle"></i>
+      <span>{{ success }}</span>
     </div>
   </div>
 </div>

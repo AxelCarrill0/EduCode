@@ -2,26 +2,41 @@
 
   <div class="lab-header">
     <div class="header-left">
-      <div class="lang-selector">
-        <div class="lang-trigger" (click)="langOpen = !langOpen">
-          <i [class]="currentLang.icon"></i>
-          <span>{{ currentLang.label }}</span>
+      <div class="module-selector">
+        <div class="module-trigger" (click)="moduleOpen = !moduleOpen" [style.--mod-color]="currentModule.color">
+          <span class="trigger-icon"><i [class]="currentModule.icon"></i></span>
+          <div class="trigger-text">
+            <span class="trigger-label">{{ currentModule.name }}</span>
+            <span class="trigger-desc">{{ currentModule.description }}</span>
+          </div>
           <i class="pi pi-chevron-down arrow-icon"></i>
         </div>
-        <div class="lang-dropdown" *ngIf="langOpen" (click)="langOpen = false">
-          <div class="lang-option" *ngFor="let lang of languages" [class.active]="lang.value === selectedLanguage" (click)="selectLanguage(lang.value)">
-            <i [class]="lang.icon"></i>
-            <span>{{ lang.label }}</span>
+        <div class="module-dropdown" *ngIf="moduleOpen">
+          <div class="dropdown-header">
+            <i class="pi pi-book"></i>
+            <span>Selecciona un módulo</span>
+          </div>
+          <div class="module-option" *ngFor="let mod of modules"
+            [class.active]="mod.id === selectedModuleId"
+            (click)="selectModule(mod.id)"
+            [style.--mod-color]="mod.color">
+            <span class="mod-icon"><i [class]="mod.icon"></i></span>
+            <div class="mod-text">
+              <span class="mod-name">{{ mod.name }}</span>
+              <span class="mod-desc">{{ mod.description }}</span>
+            </div>
+            <i class="pi pi-check mod-check"></i>
           </div>
         </div>
       </div>
       <div class="header-info">
         <h1>Laboratorio de código</h1>
-        <p>Escribe, ejecuta y prueba tu código en tiempo real.</p>
+        <p>Escribe, ejecuta y practica Python en tiempo real.</p>
       </div>
     </div>
     <div class="header-actions">
-      <p-button label="Limpiar" icon="pi pi-trash" severity="secondary" [text]="true" (onClick)="clearConsole()" styleClass="clear-btn"></p-button>
+      <p-button label="Restaurar" icon="pi pi-refresh" severity="secondary" [text]="true" (onClick)="resetCode()" styleClass="clear-btn"></p-button>
+      <p-button label="Limpiar consola" icon="pi pi-trash" severity="secondary" [text]="true" (onClick)="clearConsole()" styleClass="clear-btn"></p-button>
       <p-button [label]="isRunning ? 'Ejecutando...' : 'Ejecutar'" icon="pi pi-play" severity="success" (onClick)="execute()" [disabled]="isRunning" styleClass="run-btn"></p-button>
     </div>
   </div>
@@ -29,10 +44,10 @@
   <div class="lab-content">
 
     <div class="editor-panel">
-      <div class="panel-tabs">
-        <div class="tab active">
-          <i [class]="currentLang.icon"></i>
-          <span>{{ currentLang.label }} <span class="tab-ext">· {{ currentLang.value === 'python' ? 'main.py' : currentLang.value === 'javascript' ? 'script.js' : currentLang.value === 'java' ? 'Main.java' : 'main.cpp' }}</span></span>
+      <div class="editor-header">
+        <div class="editor-tab" [style.--mod-color]="currentModule.color">
+          <i [class]="currentModule.icon"></i>
+          <span>{{ currentModule.name }} <span class="tab-ext">· practica.py</span></span>
         </div>
       </div>
       <div class="editor-body">
@@ -46,51 +61,47 @@
           (input)="updateCodeLines()"
         ></textarea>
       </div>
-      <div class="editor-statusbar">
-        <span class="status-item">{{ currentLang.label }}</span>
-        <span class="status-item">{{ codeLines.length }} líneas</span>
-        <span class="status-item">Ln {{ codeLines.length }}, Col 1</span>
-        <span class="status-item">UTF-8</span>
+      <div class="editor-footer">
+        <span class="footer-item">{{ currentModule.name }}</span>
+        <span class="footer-item">{{ codeLines.length }} líneas</span>
+        <span class="footer-item">Ln {{ codeLines.length }}, Col 1</span>
+        <span class="footer-item">UTF-8</span>
+        <span class="footer-item">Ctrl+Enter</span>
       </div>
     </div>
 
-    <div class="console-panel">
-      <div class="console-tabs">
-        <div class="ctab active">
+    <div class="console-panel" [class.running]="isRunning">
+      <div class="console-header">
+        <div class="console-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span class="console-title">
           <i class="pi pi-terminal"></i>
-          <span>TERMINAL</span>
-        </div>
-        <div class="ctab" [class.has-output]="consoleLines.length > 1">
-          <i class="pi pi-chart-bar"></i>
-          <span>OUTPUT</span>
-        </div>
-        <div class="ctab" *ngIf="hasErrors">
-          <i class="pi pi-exclamation-circle"></i>
-          <span>PROBLEMAS</span>
-          <span class="tab-badge">1</span>
-        </div>
+          SALIDA
+        </span>
+        <span class="console-status" [class.running]="isRunning">
+          <span class="status-dot" [class.spin]="isRunning"></span>
+          {{ isRunning ? 'Ejecutando...' : 'Listo' }}
+        </span>
       </div>
-      <div class="console-output">
-        <div class="console-topbar">
-          <span class="console-path">~/workspace <span class="path-sep">&gt;</span> {{ currentLang.value === 'python' ? 'main.py' : currentLang.value === 'javascript' ? 'script.js' : currentLang.value === 'java' ? 'Main.java' : 'main.cpp' }}</span>
-          <span class="console-status" [class.running]="isRunning">
-            <span class="status-dot"></span>
-            {{ isRunning ? 'Ejecutando...' : 'Listo' }}
-          </span>
-        </div>
+      <div class="console-body">
         <div class="console-scroll">
           <div class="console-line" *ngFor="let line of consoleLines" [class]="line.type">
-            <span class="line-marker">
-              <span class="marker-symbol" *ngIf="line.type === 'input'">└─</span>
-              <span class="marker-symbol" *ngIf="line.type === 'output'">✔</span>
-              <span class="marker-symbol" *ngIf="line.type === 'error'">✘</span>
-              <span class="marker-symbol" *ngIf="line.type === 'info'">◆</span>
+            <span class="line-gutter">
+              <span class="gutter-bullet" *ngIf="line.type !== 'info'"></span>
             </span>
-            <span class="line-text">{{ line.text }}</span>
+            <span class="line-content">
+              <span class="line-prefix" *ngIf="line.type === 'input'">$</span>
+              <span class="line-prefix" *ngIf="line.type === 'output'">></span>
+              <span class="line-prefix error-prefix" *ngIf="line.type === 'error'">!</span>
+              <span class="line-text">{{ line.text }}</span>
+            </span>
           </div>
-          <div class="console-input-line">
-            <span class="input-prompt">{{ isRunning ? '...' : '❯' }}</span>
-            <span class="console-cursor" *ngIf="!isRunning">_</span>
+          <div class="console-prompt-line">
+            <span class="prompt-symbol">{{ isRunning ? '...' : '❯' }}</span>
+            <span class="prompt-cursor" *ngIf="!isRunning">_</span>
           </div>
         </div>
       </div>

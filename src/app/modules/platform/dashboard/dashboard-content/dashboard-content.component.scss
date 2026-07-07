@@ -73,7 +73,7 @@ $color-slate-200: #e2e8f0;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -87,6 +87,7 @@ $color-slate-200: #e2e8f0;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
   transition: all 0.3s ease;
+  height: 100%;
 
   &:hover {
     transform: translateY(-3px);
@@ -99,6 +100,7 @@ $color-slate-200: #e2e8f0;
 
   .p-card-content {
     padding: 0;
+    height: 100%;
   }
 }
 
@@ -164,7 +166,7 @@ $color-slate-200: #e2e8f0;
   gap: 1.5rem;
   align-items: start;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 }
@@ -191,6 +193,17 @@ $color-slate-200: #e2e8f0;
     padding: 1.5rem;
     background: white;
   }
+
+  @media (max-width: 600px) {
+    .p-panel-header {
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .p-panel-content {
+      padding: 1.25rem;
+    }
+  }
 }
 
 .progress-panel-body {
@@ -206,6 +219,17 @@ $color-slate-200: #e2e8f0;
 
 .progress-doughnut {
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+    ::ng-deep canvas {
+      max-width: 180px;
+      max-height: 180px;
+    }
+  }
 }
 
 .progress-details {
@@ -277,6 +301,23 @@ $color-slate-200: #e2e8f0;
     padding: 1.5rem;
     background: white;
   }
+
+  @media (max-width: 600px) {
+    .p-panel-header {
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .p-panel-content {
+      padding: 1.25rem;
+    }
+  }
+}
+
+.grid-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .quick-modules-grid {
@@ -284,7 +325,11 @@ $color-slate-200: #e2e8f0;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
 }
@@ -293,7 +338,9 @@ $color-slate-200: #e2e8f0;
   border-radius: 14px;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
   transition: all 0.3s ease;
+  height: 100%;
 
   &:hover {
     transform: translateY(-3px);
@@ -303,23 +350,24 @@ $color-slate-200: #e2e8f0;
 
   .p-card-body {
     padding: 1.25rem;
+    height: 100%;
   }
 
   .p-card-content {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    height: 100%;
   }
+}
 
-  .p-progressbar {
-    height: 8px;
+::ng-deep .quick-module-progress {
+  height: 8px;
+  border-radius: 10px;
+
+  .p-progressbar-value {
+    background: linear-gradient(90deg, $color-emerald, $color-cyan);
     border-radius: 10px;
-
-    .p-progressbar-value {
-      background: linear-gradient(90deg, $color-emerald, $color-cyan);
-      border-radius: 10px;
-    }
   }
 }
 
@@ -339,26 +387,38 @@ $color-slate-200: #e2e8f0;
     font-weight: 700;
     color: $color-slate-900;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+}
+
+.quick-module-body {
+  flex: 1;
+  padding: 0.5rem 0;
 }
 
 .quick-module-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.25rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
 
   .module-lessons {
     font-size: 0.85rem;
     color: $color-slate-500;
     font-weight: 600;
+    white-space: nowrap;
   }
+}
 
-  ::ng-deep .p-button {
-    font-size: 0.9rem;
-    padding: 0.45rem 1rem;
-    min-height: 38px;
-  }
+::ng-deep .quick-module-footer-btn {
+  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
+  min-height: 38px;
 }
 
 ::ng-deep .activity-panel {
@@ -383,6 +443,17 @@ $color-slate-200: #e2e8f0;
     padding: 1rem 1.5rem;
     background: white;
   }
+
+  @media (max-width: 600px) {
+    .p-panel-header {
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .p-panel-content {
+      padding: 0.75rem 1rem;
+    }
+  }
 }
 
 ::ng-deep .custom-timeline-dashboard {
@@ -402,6 +473,18 @@ $color-slate-200: #e2e8f0;
 
   .p-timeline-event-content {
     padding: 0 0 1.25rem 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .p-timeline-event-content {
+      padding: 0 0 1rem 0.75rem;
+    }
+
+    .activity-marker {
+      width: 32px;
+      height: 32px;
+      font-size: 0.8rem;
+    }
   }
 }
 
@@ -455,6 +538,3 @@ $color-slate-200: #e2e8f0;
   color: $color-slate-400;
   font-weight: 500;
 }
-
-
-

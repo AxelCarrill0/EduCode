@@ -53,7 +53,7 @@
       *ngFor="let mod of filteredModules; let i = index"
       [style.--card-delay]="i * 0.07 + 's'"
       [style.--card-accent]="mod.accent"
-      [class.card-locked]="mod.status === 'not-started'"
+      [class.card-locked]="mod.isLocked"
       [class.card-completed]="mod.status === 'completed'"
       [class.card-progressing]="mod.status === 'in-progress'">
 
@@ -94,7 +94,7 @@
               <i class="pi pi-check-circle"></i>
               Completado
             </span>
-            <button class="enter-btn" [style.--btn-accent]="mod.accent" [class.btn-locked]="mod.status === 'not-started'" [routerLink]="['/platform/module', modules.indexOf(mod)]">
+            <button class="enter-btn" [style.--btn-accent]="mod.accent" [class.btn-locked]="mod.isLocked" [routerLink]="['/platform/module', modules.indexOf(mod)]">
               <span>{{ mod.status === 'completed' ? 'Repasar' : mod.status === 'in-progress' ? 'Continuar' : 'Comenzar' }}</span>
               <i class="pi pi-arrow-right"></i>
             </button>

@@ -399,18 +399,17 @@ $white: #ffffff;
 
 .card-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 0.75rem;
-  padding-top: 0.5rem;
-  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(241, 245, 249, 0.6);
 }
 
 .card-meta {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .diff-tag {
@@ -447,6 +446,7 @@ $white: #ffffff;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  margin-left: auto;
 
   i {
     font-size: 0.7rem;
@@ -456,8 +456,8 @@ $white: #ffffff;
 .card-actions {
   display: flex;
   align-items: center;
+  width: 100%;
   gap: 0.5rem;
-  flex-shrink: 0;
 }
 
 .status-indicator {
@@ -493,6 +493,7 @@ $white: #ffffff;
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 600;
+  margin-left: auto;
   padding: 0.45rem 0.9rem;
   border-radius: 10px;
   border: none;

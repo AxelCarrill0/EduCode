@@ -1,11 +1,7 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  //la importacion se realizo de esta manera ya que con esto se optimiza 
-  // el rendimiento de la aplicacion lo que significa que los componentes 
-  // solo se cargaran cuando sea necesario, es decir, cuando el usuario acceda 
-  //a la ruta correspondiente
-  
   {
     path: '',
     loadComponent: () =>
@@ -29,6 +25,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./modules/platform/layout/layout-content/layout-content.component')
         .then(m => m.LayoutContentComponent),
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'dashboard',

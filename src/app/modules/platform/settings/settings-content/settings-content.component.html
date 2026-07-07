@@ -20,17 +20,17 @@
       </div>
       <div class="section-body">
         <div class="profile-display">
-          <p-avatar label="U" shape="circle" size="xlarge" styleClass="profile-avatar"></p-avatar>
+          <p-avatar [label]="userInitial" shape="circle" size="xlarge" styleClass="profile-avatar"></p-avatar>
           <div class="profile-text">
-            <span class="profile-name">Usuario</span>
-            <span class="profile-email">usuario&#64;educloud.com</span>
+            <span class="profile-name">{{ user?.name || 'Usuario' }}</span>
+            <span class="profile-email">{{ user?.email || '' }}</span>
           </div>
           <p-button label="Editar" icon="pi pi-pencil" severity="success" [text]="true" styleClass="profile-edit-btn" routerLink="/platform/settings/profile"></p-button>
         </div>
         <div class="profile-detail">
           <div class="detail-row">
             <span class="detail-label">Miembro desde</span>
-            <span class="detail-value">Enero 2026</span>
+            <span class="detail-value">{{ memberSince }}</span>
           </div>
           <div class="detail-row">
             <span class="detail-label">Plan</span>
@@ -95,20 +95,10 @@
         <span class="section-icon"><i class="pi pi-bell"></i></span>
         <div>
           <h2>Notificaciones</h2>
-          <p>Controla qué notificaciones deseas recibir.</p>
+          <p>Controla qué notificaciones deseas recibir en la plataforma.</p>
         </div>
       </div>
       <div class="section-body">
-        <div class="toggle-row">
-          <div class="toggle-info">
-            <span class="toggle-icon"><i class="pi pi-envelope"></i></span>
-            <div>
-              <span class="toggle-label">Correo electrónico</span>
-              <span class="toggle-desc">Recibe resúmenes semanales de tu progreso</span>
-            </div>
-          </div>
-          <p-inputSwitch [(ngModel)]="settings.emailNotifications" (ngModelChange)="onNotificationChange()"></p-inputSwitch>
-        </div>
         <div class="toggle-row">
           <div class="toggle-info">
             <span class="toggle-icon"><i class="pi pi-bell"></i></span>

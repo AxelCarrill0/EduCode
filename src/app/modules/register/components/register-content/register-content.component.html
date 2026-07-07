@@ -28,20 +28,9 @@
           <span>{{ errorMessage }}</span>
         </div>
 
-        <div class="social-login-row">
-          <p-button styleClass="social-btn-labeled" severity="secondary" [outlined]="true" aria-label="Registrarse con Google">
-            <i class="pi pi-google"></i>
-            <span>Google</span>
-          </p-button>
-          <p-button styleClass="social-btn-labeled" severity="secondary" [outlined]="true" aria-label="Registrarse con GitHub">
-            <i class="pi pi-github"></i>
-            <span>GitHub</span>
-          </p-button>
+        <div class="form-divider">
+          <span>Regístrate con tu correo electrónico</span>
         </div>
-
-        <p-divider align="center" type="solid">
-          <span class="divider-text">O usa tu correo</span>
-        </p-divider>
 
         <div class="form-group">
           <label for="fullname">Nombre completo</label>
@@ -94,7 +83,7 @@
         <div class="form-options">
           <p-checkbox [(ngModel)]="acceptTerms" [binary]="true" inputId="accept-terms"></p-checkbox>
           <label for="accept-terms" class="terms-label">
-            Acepto los <a class="terms-link" href="javascript:void(0)">Términos</a> y <a class="terms-link" href="javascript:void(0)">Política de Privacidad</a>
+            Acepto los <a class="terms-link" (click)="errorMessage = 'Documento en desarrollo.'">Términos</a> y <a class="terms-link" (click)="errorMessage = 'Documento en desarrollo.'">Política de Privacidad</a>
           </label>
         </div>
 

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ProgressService, MODULE_NAMES } from './progress.service';
+import { ProgressService } from './progress.service';
+import { MODULE_ICONS, MODULE_COLORS, MODULE_NAMES } from '../../../../core/constants/app.constants';
+import { Subject, takeUntil } from 'rxjs';
 
 interface ModuleProgress {
   name: string;
@@ -13,9 +15,6 @@ interface ModuleProgress {
   lessonsCompletadas: number;
 }
 
-const MODULE_ICONS = ['pi pi-python', 'pi pi-database', 'pi pi-table', 'pi pi-calculator', 'pi pi-sitemap', 'pi pi-reload'];
-const MODULE_COLORS = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4'];
-
 @Component({
   selector: 'app-progress-content',
   standalone: true,
@@ -23,8 +22,19 @@ const MODULE_COLORS = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444', '#
   templateUrl: './progress-content.component.html',
   styleUrl: './progress-content.component.scss'
 })
-export class ProgressContentComponent {
+export class ProgressContentComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   constructor(public progress: ProgressService) {}
+
+  ngOnInit(): void {
+    this.progress.fetchFromApi().pipe(takeUntil(this.destroy$)).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   get moduleProgress(): ModuleProgress[] {
     return MODULE_NAMES.map((name, i) => {

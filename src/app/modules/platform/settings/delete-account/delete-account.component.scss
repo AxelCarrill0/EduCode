@@ -74,3 +74,12 @@ $emerald: #10b981; $red: #ef4444;
 .done-icon {
   font-size: 3rem; color: $emerald; margin-bottom: 0.75rem;
 }
+
+.alert-error {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 600; padding: 0.6rem 0.85rem;
+  border-radius: 8px; margin-bottom: 1rem;
+  text-align: left;
+  background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15);
+  color: $red;
+}

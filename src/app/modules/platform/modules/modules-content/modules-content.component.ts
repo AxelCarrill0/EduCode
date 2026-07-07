@@ -1,21 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-interface ModuleItem {
-  name: string;
-  description: string;
-  icon: string;
-  accent: string;
-  iconBg: string;
-  lessons: number;
-  completed: number;
-  progress: number;
-  difficulty: string;
-  status: 'not-started' | 'in-progress' | 'completed';
-  xp: number;
-  isNew?: boolean;
-}
+import { ModulesService, ModuleItem } from '../../../../core/services/modules.service';
+import { ProgressService } from '../../progress/progress-content/progress.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-modules-content',
@@ -24,8 +12,10 @@ interface ModuleItem {
   templateUrl: './modules-content.component.html',
   styleUrl: './modules-content.component.scss'
 })
-export class ModulesContentComponent {
+export class ModulesContentComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   activeFilter = 'all';
+  modules: ModuleItem[] = [];
 
   filterChips = [
     { key: 'all', label: 'Todos', active: true },
@@ -33,87 +23,35 @@ export class ModulesContentComponent {
     { key: 'completed', label: 'Completados', active: false }
   ];
 
-  modules: ModuleItem[] = [
-    {
-      name: 'Introducción a Python',
-      description: 'Conoce los fundamentos de la programación con Python desde cero.',
-      icon: 'pi pi-python',
-      accent: '#10b981',
-      iconBg: 'rgba(16, 185, 129, 0.1)',
-      lessons: 5,
-      completed: 4,
-      progress: 80,
-      difficulty: 'Principiante',
-      status: 'in-progress',
-      xp: 250
-    },
-    {
-      name: 'Variables',
-      description: 'Aprende a almacenar y manipular información en tus programas.',
-      icon: 'pi pi-database',
-      accent: '#3b82f6',
-      iconBg: 'rgba(59, 130, 246, 0.1)',
-      lessons: 4,
-      completed: 2,
-      progress: 50,
-      difficulty: 'Principiante',
-      status: 'in-progress',
-      xp: 180
-    },
-    {
-      name: 'Tipos de datos',
-      description: 'Descubre cómo Python maneja textos, números y valores booleanos.',
-      icon: 'pi pi-table',
-      accent: '#8b5cf6',
-      iconBg: 'rgba(139, 92, 246, 0.1)',
-      lessons: 4,
-      completed: 0,
-      progress: 0,
-      difficulty: 'Principiante',
-      status: 'not-started',
-      xp: 200
-    },
-    {
-      name: 'Operadores',
-      description: 'Domina las operaciones aritméticas, lógicas y de comparación.',
-      icon: 'pi pi-calculator',
-      accent: '#f59e0b',
-      iconBg: 'rgba(245, 158, 11, 0.1)',
-      lessons: 3,
-      completed: 0,
-      progress: 0,
-      difficulty: 'Principiante',
-      status: 'not-started',
-      xp: 150
-    },
-    {
-      name: 'Condicionales',
-      description: 'Controla el flujo de tu programa con if, else y elif.',
-      icon: 'pi pi-sitemap',
-      accent: '#ef4444',
-      iconBg: 'rgba(239, 68, 68, 0.1)',
-      lessons: 5,
-      completed: 0,
-      progress: 0,
-      difficulty: 'Intermedio',
-      status: 'not-started',
-      xp: 300
-    },
-    {
-      name: 'Bucles',
-      description: 'Automatiza tareas repetitivas con for y while.',
-      icon: 'pi pi-reload',
-      accent: '#06b6d4',
-      iconBg: 'rgba(6, 182, 212, 0.1)',
-      lessons: 4,
-      completed: 0,
-      progress: 0,
-      difficulty: 'Intermedio',
-      status: 'not-started',
-      xp: 280,
-      isNew: true
-    }
-  ];
+  constructor(
+    private modulesService: ModulesService,
+    private progress: ProgressService
+  ) {}
+
+  ngOnInit(): void {
+    this.modulesService.fetchAll().pipe(takeUntil(this.destroy$)).subscribe((modules) => {
+      this.modules = modules.map((m, i) => {
+        const p = this.progress.getModuleProgress(m.id - 1);
+        const isCompleted = p.completed === p.total && p.total > 0;
+        const isStarted = p.completed > 0;
+        const isLocked = i > 0 && modules[i - 1] && !this.progress.getModuleProgress(modules[i - 1].id - 1).completedModule;
+        return {
+          ...m,
+          lessons: p.total || m.lessons,
+          completed: p.completed,
+          progress: p.pct,
+          status: isLocked ? 'not-started' as const : isCompleted ? 'completed' as const : isStarted ? 'in-progress' as const : 'not-started' as const,
+          xp: isCompleted ? m.xp : isStarted ? Math.round(m.xp * p.pct / 100) : 0,
+          isLocked,
+        };
+      });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   get totalCompleted(): number {
     return this.modules.reduce((sum, m) => sum + m.completed, 0);

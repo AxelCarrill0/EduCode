@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ProgressService } from '../../progress/progress-content/progress.service';
-import { SettingsService } from '../settings-content/settings.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -16,16 +16,30 @@ import { SettingsService } from '../settings-content/settings.service';
 export class DeleteAccountComponent {
   confirmText = '';
   step: 'confirm' | 'done' = 'confirm';
+  error = '';
+  deleting = false;
 
   constructor(
     private progress: ProgressService,
-    private settings: SettingsService
+    private auth: AuthService,
+    private router: Router
   ) {}
 
   delete(): void {
-    this.progress.resetAll();
-    this.settings['settings'] = undefined as any;
-    localStorage.removeItem('edocode_settings');
-    this.step = 'done';
+    this.error = '';
+    this.deleting = true;
+
+    this.auth.deleteAccount().subscribe({
+      next: () => {
+        this.progress.resetAll();
+        localStorage.removeItem('edocode_settings');
+        this.deleting = false;
+        this.step = 'done';
+      },
+      error: (err) => {
+        this.deleting = false;
+        this.error = err.error?.message || 'Error al eliminar la cuenta.';
+      }
+    });
   }
 }

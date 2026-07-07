@@ -378,3 +378,113 @@ body.dark-mode .detail-container .content-text {
 body.dark-mode .settings-container .detail-value.plan-badge {
   background: rgba(16, 185, 129, 0.15) !important;
 }
+
+body.dark-mode .settings-container .section-title-row {
+  background: color-mix(in srgb, var(--section-accent) 6%, var(--bg-card)) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .settings-container .section-title-row h2 {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .settings-container .section-title-row p {
+  color: var(--text-muted) !important;
+}
+
+body.dark-mode .settings-container .action-label {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .settings-container .action-icon {
+  background: var(--bg-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .settings-container .action-icon.danger {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #ef4444 !important;
+}
+
+body.dark-mode .settings-container .divider {
+  background: var(--border-color) !important;
+}
+
+body.dark-mode .settings-container .toggle-arrow {
+  color: var(--text-muted) !important;
+}
+
+body.dark-mode .settings-container .profile-text .profile-name {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .settings-container .profile-text .profile-email {
+  color: var(--text-muted) !important;
+}
+
+body.dark-mode .settings-container .toggle-info .toggle-label {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .settings-container .toggle-info .toggle-desc {
+  color: var(--text-muted) !important;
+}
+
+body.dark-mode .settings-container .action-desc {
+  color: var(--text-muted) !important;
+}
+
+body.dark-mode .settings-container .profile-detail {
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .subview-container .back-link {
+  color: var(--text-muted) !important;
+}
+
+body.dark-mode .subview-container .subview-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .subview-container .subview-card h1 {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .subview-container .subview-card p {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .subview-container .form-group label {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .subview-container .form-input {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .subview-container .delete-info {
+  background: var(--bg-subtle) !important;
+}
+
+body.dark-mode .subview-container .delete-info p {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .subview-container .delete-info li {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .subview-container .alert-error {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+}
+
+body.dark-mode .subview-container .alert-success {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+  color: #34d399 !important;
+}

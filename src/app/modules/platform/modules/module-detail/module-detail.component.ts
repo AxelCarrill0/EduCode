@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProgressService } from '../../progress/progress-content/progress.service';
+import { Subject, takeUntil } from 'rxjs';
+import { UNLOCK_BANNER_DURATION_MS } from '../../../../core/constants/app.constants';
 
 interface Lesson {
   title: string;
@@ -287,7 +289,9 @@ const MODULES_DATA: ModuleData[] = [
   templateUrl: './module-detail.component.html',
   styleUrl: './module-detail.component.scss'
 })
-export class ModuleDetailComponent implements OnInit {
+export class ModuleDetailComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  private timeoutIds: ReturnType<typeof setTimeout>[] = [];
   module?: ModuleData;
   moduleId = '';
   openLesson: number | null = null;
@@ -297,7 +301,7 @@ export class ModuleDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       this.moduleId = params.get('id') || '';
       const index = parseInt(this.moduleId, 10);
       if (!isNaN(index) && index >= 0 && index < MODULES_DATA.length) {
@@ -305,6 +309,12 @@ export class ModuleDetailComponent implements OnInit {
         this.syncProgress();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.timeoutIds.forEach(id => clearTimeout(id));
   }
 
   private syncProgress(): void {
@@ -345,7 +355,8 @@ export class ModuleDetailComponent implements OnInit {
     this.syncProgress();
     if (unlocked.length > 0) {
       this.justUnlocked = unlocked[0].name;
-      setTimeout(() => this.justUnlocked = null, 4000);
+      const id = setTimeout(() => this.justUnlocked = null, UNLOCK_BANNER_DURATION_MS);
+      this.timeoutIds.push(id);
     }
   }
 }

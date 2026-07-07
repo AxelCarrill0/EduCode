@@ -37,10 +37,41 @@ $slate-100: #f1f5f9; $white: #ffffff; $emerald: #10b981;
   background: $white;
 
   &:focus { border-color: $emerald; }
+
+  &:disabled {
+    background: $slate-100;
+    color: $slate-500;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
 
 .form-textarea { resize: vertical; }
 
+.form-hint {
+  font-size: 0.75rem;
+  color: $slate-400;
+  margin-top: 0.1rem;
+}
+
 .form-actions {
   display: flex; justify-content: flex-end; padding-top: 0.5rem;
+}
+
+.form-message {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: 1rem; padding: 0.65rem 0.85rem;
+  border-radius: 10px; font-size: 0.85rem; font-weight: 500;
+
+  &.error {
+    background: rgba(239, 68, 68, 0.08); color: #dc2626;
+    i { color: #dc2626; }
+  }
+
+  &.success {
+    background: rgba(16, 185, 129, 0.08); color: $emerald;
+    i { color: $emerald; }
+  }
+
+  i { font-size: 1rem; flex-shrink: 0; }
 }

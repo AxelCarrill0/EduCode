@@ -6,7 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RouterModule, Router } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DividerModule } from 'primeng/divider';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-register-content',
@@ -18,7 +18,6 @@ import { DividerModule } from 'primeng/divider';
     InputTextModule,
     PasswordModule,
     CheckboxModule,
-    DividerModule,
     RouterModule
   ],
   templateUrl: './register-content.component.html',
@@ -32,14 +31,24 @@ export class RegisterContentComponent {
   confirmPassword: string = '';
   acceptTerms: boolean = false;
   errorMessage: string = '';
+  loading: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService
+  ) {}
 
   registrar() {
     this.errorMessage = '';
 
-    if (this.nombre.trim() === '' || this.correo.trim() === '' || this.password === '' || this.confirmPassword === '') {
+    if (!this.nombre.trim() || !this.correo.trim() || !this.password || !this.confirmPassword) {
       this.errorMessage = 'Todos los campos son obligatorios';
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.correo.trim())) {
+      this.errorMessage = 'Ingresa un correo electrónico válido';
       return;
     }
 
@@ -53,9 +62,21 @@ export class RegisterContentComponent {
       return;
     }
 
-    console.log('Registro exitoso para:', this.nombre, this.correo);
+    if (this.password.length < 8) {
+      this.errorMessage = 'La contraseña debe tener al menos 8 caracteres';
+      return;
+    }
 
-    alert('Usuario registrado correctamente');
-    this.router.navigate(['/login']);
+    this.loading = true;
+    this.auth.register(this.nombre.trim(), this.correo.trim(), this.password).subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/platform/']);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = err.error?.message || 'Error al crear la cuenta. Intenta de nuevo.';
+      }
+    });
   }
 }

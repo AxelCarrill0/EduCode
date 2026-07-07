@@ -218,64 +218,32 @@ $color-slate-50: #f8fafc;
   }
 }
 
-// Social login - labeled buttons
-.social-login-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-bottom: 0.25rem;
+.form-divider {
+  text-align: center;
+  margin: 0 0 1.25rem;
+  font-size: 0.85rem;
+  color: $color-slate-400;
+  font-weight: 500;
+  position: relative;
 
-  @media (max-width: 400px) {
-    grid-template-columns: 1fr;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 40%;
+    height: 1px;
+    background: $color-slate-200;
   }
 
-  ::ng-deep .social-btn-labeled {
-    .p-button {
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 0.7rem 0.5rem;
-      border-radius: 12px;
-      border: 1px solid $color-slate-200;
-      background: white;
-      color: $color-slate-700;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-
-      &:hover {
-        border-color: $color-emerald;
-        color: $color-emerald;
-        background: rgba(16, 185, 129, 0.03);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
-      }
-
-      i {
-        font-size: 1.1rem;
-      }
-    }
-  }
-}
-
-::ng-deep .p-divider {
-  &.p-divider-horizontal {
-    margin: 1rem 0;
-
-    .p-divider-content {
-      background: white;
-      padding: 0 1rem;
-    }
-  }
-
-  .divider-text {
-    font-size: 0.8rem;
-    color: $color-slate-400;
-    font-weight: 500;
-    white-space: nowrap;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    right: 0;
+    height: 1px;
+    background: $color-slate-200;
   }
 }
 

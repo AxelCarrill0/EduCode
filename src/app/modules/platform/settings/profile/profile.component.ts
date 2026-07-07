@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { SettingsService } from '../settings-content/settings.service';
-
+import { AuthService, AuthUser } from '../../../../core/services/auth.service';
+import { SUCCESS_MESSAGE_DURATION_MS } from '../../../../core/constants/app.constants';
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -12,14 +12,53 @@ import { SettingsService } from '../settings-content/settings.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
-  name = 'Usuario';
-  email = 'usuario@educloud.com';
-  bio = 'Aprendiendo programación con EduCode';
+export class ProfileComponent implements OnInit, OnDestroy {
+  private timeoutIds: ReturnType<typeof setTimeout>[] = [];
+  name = '';
+  email = '';
+  bio = '';
+  error = '';
+  success = '';
+  saving = false;
 
-  constructor(private settings: SettingsService) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    const user = this.auth.getUser();
+    if (user) {
+      this.name = user.name;
+      this.email = user.email;
+      this.bio = user.bio || 'Aprendiendo programación con EduCode';
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.timeoutIds.forEach(id => clearTimeout(id));
+  }
 
   save(): void {
-    alert('Perfil actualizado (simulado)');
+    this.error = '';
+    this.success = '';
+    if (!this.name.trim()) {
+      this.error = 'El nombre es obligatorio.';
+      return;
+    }
+
+    this.saving = true;
+    this.auth.updateProfile(this.name.trim(), this.bio).subscribe({
+      next: () => {
+        this.saving = false;
+        this.success = 'Perfil actualizado correctamente.';
+        const id = setTimeout(() => this.success = '', SUCCESS_MESSAGE_DURATION_MS);
+        this.timeoutIds.push(id);
+      },
+      error: (err) => {
+        this.saving = false;
+        this.error = err.error?.message || 'Error al guardar el perfil.';
+      }
+    });
   }
 }

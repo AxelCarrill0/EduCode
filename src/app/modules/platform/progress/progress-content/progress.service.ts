@@ -1,4 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, takeUntil, tap } from 'rxjs/operators';
+import { ApiService } from '../../../../core/services/api.service';
+import { NotificationService } from '../../../../core/services/notification.service';
+import { MODULE_LESSON_COUNTS, MODULE_NAMES, XP_PER_LESSON_COMPLETED, XP_PER_MODULE_COMPLETED, XP_PER_ACHIEVEMENT } from '../../../../core/constants/app.constants';
 
 export interface LessonState {
   lessonIndex: number;
@@ -34,14 +39,26 @@ export interface ProgressData {
   lastActivityDate: string;
 }
 
+interface ProgressResponse {
+  stats?: {
+    xp?: number;
+    streak?: number;
+  };
+  modules?: ProgressModuleDTO[];
+}
+
+interface ProgressModuleDTO {
+  completedModule?: boolean;
+  completed?: number;
+}
+
+interface CompleteLessonResponse {
+  stats?: {
+    streak?: number;
+  };
+}
+
 const STORAGE_KEY = 'edocode_progress';
-
-const MODULE_LESSON_COUNTS = [5, 4, 4, 3, 5, 4];
-
-export const MODULE_NAMES = [
-  'Introducción a Python', 'Variables', 'Tipos de datos',
-  'Operadores', 'Condicionales', 'Bucles'
-];
 
 export const ACHIEVEMENT_DEFS: AchievementDef[] = [
   { id: 'first-lesson', name: 'Primera lección', description: 'Completaste tu primera lección', icon: 'pi pi-star-fill', color: '#10b981', bgColor: 'rgba(16, 185, 129, 0.12)' },
@@ -73,10 +90,18 @@ function defaultProgress(): ProgressData {
 export class ProgressService {
   private data: ProgressData;
   private achievements: AchievementState[];
+  private destroy$ = new Subject<void>();
 
-  constructor() { const saved = this.load(); this.data = saved.data; this.achievements = saved.achievements; }
+  constructor(
+    private api: ApiService,
+    private notifications: NotificationService
+  ) {
+    const saved = this.loadLocal();
+    this.data = saved.data;
+    this.achievements = saved.achievements;
+  }
 
-  private load(): { data: ProgressData; achievements: AchievementState[] } {
+  private loadLocal(): { data: ProgressData; achievements: AchievementState[] } {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -90,8 +115,34 @@ export class ProgressService {
     return { data: defaultProgress(), achievements: ACHIEVEMENT_DEFS.map(a => ({ ...a, earned: false })) };
   }
 
-  private save(): void {
+  private saveLocal(): void {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: this.data, achievements: this.achievements })); } catch {}
+  }
+
+  fetchFromApi(): Observable<ProgressResponse | null> {
+    return this.api.get<ProgressResponse>('/progress').pipe(
+      tap((res) => {
+        if (res?.stats) {
+          this.data.xp = Math.max(res.stats.xp ?? 0, this.data.xp);
+          if ((res.stats.streak ?? 0) > 0) this.data.streak = res.stats.streak ?? 0;
+
+          if (res.modules) {
+            res.modules.forEach((m, i: number) => {
+              if (this.data.modules[i]) {
+                this.data.modules[i].completed = m.completedModule ?? false;
+                this.data.modules[i].started = (m.completed ?? 0) > 0;
+                this.data.modules[i].lessons.forEach((lesson, j) => {
+                  lesson.completed = j < (m.completed ?? 0);
+                });
+              }
+            });
+          }
+          this.evaluateAchievements();
+          this.saveLocal();
+        }
+      }),
+      catchError(() => of(null))
+    );
   }
 
   getModules(): ModuleState[] { return this.data.modules; }
@@ -133,11 +184,16 @@ export class ProgressService {
     }, 0);
   }
 
-  getModuleProgress(moduleId: number): { completed: number; total: number; pct: number } {
+  getModuleProgress(moduleId: number): { completed: number; total: number; pct: number; completedModule: boolean } {
     const mod = this.data.modules[moduleId];
-    if (!mod) return { completed: 0, total: 0, pct: 0 };
+    if (!mod) return { completed: 0, total: 0, pct: 0, completedModule: false };
     const completed = mod.lessons.filter(l => l.completed).length;
-    return { completed, total: mod.lessons.length, pct: mod.lessons.length > 0 ? Math.round((completed / mod.lessons.length) * 100) : 0 };
+    return {
+      completed,
+      total: mod.lessons.length,
+      pct: mod.lessons.length > 0 ? Math.round((completed / mod.lessons.length) * 100) : 0,
+      completedModule: completed === mod.lessons.length && mod.lessons.length > 0,
+    };
   }
 
   completeLesson(moduleId: number, lessonIndex: number): AchievementState[] {
@@ -149,13 +205,51 @@ export class ProgressService {
     if (lesson?.completed) return [];
 
     if (lesson) lesson.completed = true;
-    this.data.xp += 25;
+    this.data.xp += XP_PER_LESSON_COMPLETED;
+
+    this.notifications.add({
+      title: 'Lección completada',
+      message: `Completaste "${mod.moduleName}" - Lección ${lessonIndex + 1}`,
+      icon: 'pi pi-check-circle',
+      color: '#10b981',
+      type: 'lesson',
+    });
 
     this.updateStreak();
     this.checkModuleCompletion(moduleId);
     const newAchievements = this.evaluateAchievements();
-    this.save();
+    this.saveLocal();
+
+    this.api.post<CompleteLessonResponse>('/progress/lessons/complete', {
+      moduleId: moduleId + 1,
+      lessonId: this.getLessonId(moduleId, lessonIndex),
+    }).pipe(
+      takeUntil(this.destroy$),
+      tap((res) => {
+        if (res?.stats) {
+          this.data.streak = res.stats.streak ?? this.data.streak;
+        }
+      }),
+      catchError((err) => {
+        console.error('Error al guardar progreso en la BD:', err);
+        return of(null);
+      })
+    ).subscribe();
+
     return newAchievements;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private getLessonId(moduleId: number, lessonIndex: number): number {
+    let id = 0;
+    for (let m = 0; m < moduleId; m++) {
+      id += MODULE_LESSON_COUNTS[m];
+    }
+    return id + lessonIndex + 1;
   }
 
   private updateStreak(): void {
@@ -178,7 +272,14 @@ export class ProgressService {
     const allDone = mod.lessons.every(l => l.completed);
     if (allDone) {
       mod.completed = true;
-      this.data.xp += 100;
+      this.data.xp += XP_PER_MODULE_COMPLETED;
+      this.notifications.add({
+        title: 'Módulo completado',
+        message: `¡Felicidades! Completaste "${mod.moduleName}"`,
+        icon: 'pi pi-trophy',
+        color: '#f59e0b',
+        type: 'lesson',
+      });
     }
   }
 
@@ -202,8 +303,15 @@ export class ProgressService {
       if (!ach.earned && checks[ach.id]) {
         ach.earned = true;
         ach.earnedAt = new Date();
-        this.data.xp += 50;
+        this.data.xp += XP_PER_ACHIEVEMENT;
         newOnes.push(ach);
+        this.notifications.add({
+          title: 'Logro desbloqueado',
+          message: `Has conseguido: ${ach.name}`,
+          icon: ach.icon,
+          color: ach.color,
+          type: 'achievement',
+        });
       }
     }
 
@@ -213,6 +321,6 @@ export class ProgressService {
   resetAll(): void {
     this.data = defaultProgress();
     this.achievements = ACHIEVEMENT_DEFS.map(a => ({ ...a, earned: false }));
-    this.save();
+    this.saveLocal();
   }
 }
