@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.educode.com',
+  apiUrl: 'https://backend-production.up.railway.app',
 };
