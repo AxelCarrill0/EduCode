@@ -24,27 +24,24 @@ router.post('/register', asyncHandler(async (req, res) => {
     throw badRequest('La contraseña debe tener al menos 6 caracteres.');
   }
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { name },
-    },
-  });
-
-  if (error) {
-    throw badRequest(error.message);
+  if (!supabaseAdmin) {
+    throw badRequest('El servidor no está configurado para registros.');
   }
 
-  const user = data.user;
+  const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true,
+    user_metadata: { name },
+  });
+
+  if (createError) {
+    throw badRequest(createError.message);
+  }
+
+  const user = newUser.user;
 
   if (user) {
-    if (supabaseAdmin) {
-      await supabaseAdmin.auth.admin.updateUserById(user.id, {
-        email_confirm: true,
-      });
-    }
-
     await supabase.from('profiles').upsert({
       id: user.id,
       email,
@@ -56,19 +53,16 @@ router.post('/register', asyncHandler(async (req, res) => {
     });
   }
 
-  if (!data.session && supabaseAdmin && user) {
-    const { data: loginData } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    data.session = loginData?.session || null;
-  }
+  const { data: loginData } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   res.status(201).json({
     message: 'Usuario registrado correctamente.',
-    session: data.session,
+    session: loginData?.session || null,
     user: user ? profileFromUser({ ...user, user_metadata: { name } }) : null,
-    needsEmailConfirmation: !data.session,
+    needsEmailConfirmation: false,
   });
 }));
 
