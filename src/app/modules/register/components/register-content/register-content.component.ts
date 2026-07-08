@@ -32,6 +32,7 @@ export class RegisterContentComponent {
   acceptTerms: boolean = false;
   errorMessage: string = '';
   loading: boolean = false;
+  success: boolean = false;
 
   constructor(
     private router: Router,
@@ -71,7 +72,8 @@ export class RegisterContentComponent {
     this.auth.register(this.nombre.trim(), this.correo.trim(), this.password).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/platform/']);
+        this.success = true;
+        setTimeout(() => this.router.navigate(['/platform/']), 1500);
       },
       error: (err) => {
         this.loading = false;

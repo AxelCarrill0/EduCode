@@ -25,7 +25,7 @@
     </div>
 
     <div class="form-actions">
-      <p-button label="Guardar cambios" icon="pi pi-check" severity="success" (onClick)="save()" [disabled]="saving"></p-button>
+      <p-button label="Guardar cambios" icon="pi pi-check" severity="success" (onClick)="save()" [loading]="saving"></p-button>
     </div>
 
     <div *ngIf="error" class="form-message error">

@@ -37,7 +37,7 @@
     <div class="header-actions">
       <p-button label="Restaurar" icon="pi pi-refresh" severity="secondary" [text]="true" (onClick)="resetCode()" styleClass="clear-btn"></p-button>
       <p-button label="Limpiar consola" icon="pi pi-trash" severity="secondary" [text]="true" (onClick)="clearConsole()" styleClass="clear-btn"></p-button>
-      <p-button [label]="isRunning ? 'Ejecutando...' : 'Ejecutar'" icon="pi pi-play" severity="success" (onClick)="execute()" [disabled]="isRunning" styleClass="run-btn"></p-button>
+      <p-button label="Ejecutar" icon="pi pi-play" severity="success" (onClick)="execute()" [loading]="isRunning" styleClass="run-btn"></p-button>
     </div>
   </div>
 

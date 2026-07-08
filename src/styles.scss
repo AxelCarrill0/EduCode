@@ -488,3 +488,12 @@ body.dark-mode .subview-container .alert-success {
   border-color: rgba(16, 185, 129, 0.2) !important;
   color: #34d399 !important;
 }
+
+router-outlet + * {
+  animation: page-fade-in 0.3s ease-out;
+}
+
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

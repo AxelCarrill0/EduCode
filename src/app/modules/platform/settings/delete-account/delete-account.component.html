@@ -33,7 +33,7 @@
 
     <div class="form-actions">
       <p-button label="Cancelar" severity="secondary" [outlined]="true" routerLink="/platform/settings"></p-button>
-      <p-button label="Eliminar mi cuenta" icon="pi pi-trash" severity="danger" (onClick)="delete()" [disabled]="confirmText !== 'ELIMINAR'"></p-button>
+      <p-button label="Eliminar mi cuenta" icon="pi pi-trash" severity="danger" (onClick)="delete()" [disabled]="confirmText !== 'ELIMINAR'" [loading]="deleting"></p-button>
     </div>
   </div>
 </div>

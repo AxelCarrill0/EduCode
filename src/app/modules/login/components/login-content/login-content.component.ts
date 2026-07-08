@@ -29,6 +29,7 @@ export class LoginContentComponent {
   rememberMe: boolean = false;
   errorMessage: string = '';
   loading: boolean = false;
+  success: boolean = false;
 
   constructor(
     private router: Router,
@@ -53,7 +54,8 @@ export class LoginContentComponent {
     this.auth.login(this.correo.trim(), this.password).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/platform/']);
+        this.success = true;
+        setTimeout(() => this.router.navigate(['/platform/']), 1200);
       },
       error: (err) => {
         this.loading = false;

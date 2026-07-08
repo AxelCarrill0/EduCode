@@ -9,6 +9,10 @@
   </div>
 
   <div class="register-form-panel">
+    <div class="success-overlay" *ngIf="success">
+      <div class="success-check">✓</div>
+      <p class="success-text">¡Cuenta creada con éxito!</p>
+    </div>
     <div class="mobile-logo-container">
       <div class="brand-logo" routerLink="/">
         <span class="logo-accent">Edu</span>Code
@@ -93,7 +97,8 @@
           iconPos="right"
           styleClass="register-submit-btn"
           severity="success"
-          (click)="registrar()">
+          (click)="registrar()"
+          [loading]="loading">
         </p-button>
 
         <div class="login-section">

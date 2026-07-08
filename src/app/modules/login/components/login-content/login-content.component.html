@@ -42,6 +42,10 @@
   </div>
 
   <div class="login-form-panel">
+    <div class="success-overlay" *ngIf="success">
+      <div class="success-check">✓</div>
+      <p class="success-text">¡Bienvenido de nuevo!</p>
+    </div>
     <div class="form-container">
       <div class="mobile-logo-container">
         <div class="brand-logo" routerLink="/">
@@ -101,7 +105,8 @@
         iconPos="right"
         styleClass="login-submit-btn"
         severity="success"
-        (click)="iniciarSesion()">
+        (click)="iniciarSesion()"
+        [loading]="loading">
       </p-button>
 
       <div class="register-section">
