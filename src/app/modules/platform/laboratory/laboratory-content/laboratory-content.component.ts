@@ -259,7 +259,9 @@ export class LaboratoryContentComponent implements OnInit {
         if (res.stderr) {
           lines.push({ text: res.stderr, type: 'error' });
         }
-        if (!res.stdout && !res.stderr) {
+        if (res.output && res.exitCode === -1 && !res.stdout && !res.stderr) {
+          lines.push({ text: res.output, type: 'error' });
+        } else if (!res.stdout && !res.stderr) {
           lines.push({ text: '(sin salida)', type: 'info' });
         }
 
@@ -274,10 +276,12 @@ export class LaboratoryContentComponent implements OnInit {
       },
       error: (err) => {
         this.isRunning = false;
-        const msg = err.error?.message || 'Error al conectar con el servidor. Verifica que el backend esté corriendo.';
-        this.consoleLines = [
-          { text: msg, type: 'error' }
-        ];
+        const status = err.status;
+        if (status === 401) {
+          this.consoleLines = [{ text: 'Sesión expirada. Inicia sesión nuevamente.', type: 'error' }];
+        } else {
+          this.consoleLines = [{ text: err.error?.message || 'Error al conectar con el servidor.', type: 'error' }];
+        }
       }
     });
   }
